@@ -6,3 +6,20 @@
   font-weight: 700;
   line-height: normal;
 }
+
+.main-button {
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 700;
+  font-size: 18px;
+  font-family: "PT Sans", serif;
+  background-color: var(--primary-cyan);
+  color: var(--primary-white);
+}
+
+.about__divider {
+  width: 12px;
+  //height: auto;
+  background: linear-gradient(180deg, #0097a9 0%, rgba(0, 151, 169, 0) 100%);
+}
