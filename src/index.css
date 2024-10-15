@@ -45,12 +45,12 @@ html, body {
     padding-right: 0;
 }
 
-/* xs */
-@media (min-width: 0px) {
-    .container {
-        padding: 0 12px;
-    }
-}
+/*!* xs *!*/
+/*@media (min-width: 0px) {*/
+/*    .container {*/
+/*        padding: 0 12px;*/
+/*    }*/
+/*}*/
 /*a {*/
 /*  font-weight: 500;*/
 /*  color: #646cff;*/

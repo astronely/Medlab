@@ -1,4 +1,4 @@
-/* xs */
+/* >=xs */
 @media (min-width: 0px) {
   .about__main {
     &-content-item {
@@ -6,6 +6,14 @@
     }
   }
 }
+
+/* <=xs */
+@media (max-width: 576px) {
+  .about__container {
+    padding: 0 12px;
+  }
+}
+
 /* sm */
 @media (min-width: 576px) {
   .about__main {

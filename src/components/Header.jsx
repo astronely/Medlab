@@ -1,4 +1,4 @@
-import {Container, Nav, Navbar} from "react-bootstrap";
+import {Container, Nav, Navbar, NavbarBrand} from "react-bootstrap";
 import styles from "./styles/header.module.scss"
 import "./styles/header.scss"
 import CityPicture from "/src/assets/about-us/nav/Vector.svg"
@@ -10,10 +10,10 @@ export default function Header() {
     return (
         <Navbar expand="lg" className={styles.bg}>
             <Container className="header">
-                <Nav><Logo /></Nav>
+                <NavbarBrand href="/"><Logo /></NavbarBrand>
                 <Navbar.Collapse>
                     <Nav className="header__links">
-                        <Nav.Link className="header__link" href="#">О нас</Nav.Link>
+                        <Nav.Link className="header__link" href="/about-us">О нас</Nav.Link>
                         <Nav.Link className="header__link" href="#">Цены</Nav.Link>
                         <Nav.Link className="header__link" href="#">Специалисты</Nav.Link>
                         <Nav.Link className="header__link" href="#">Контакты</Nav.Link>

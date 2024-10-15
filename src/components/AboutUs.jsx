@@ -27,7 +27,7 @@ export default function AboutUs() {
         {text: "Link 3"},
         {text: "Link 4"},
         {text: "Link 5"},
-    ]
+    ] // TODO: links dependence from chosen city
 
     const addressesInfo = {
         title: "Адреса и контакты контроллирующих органов",
