@@ -33,7 +33,7 @@ export default function AboutUs() {
     const addressesInfo = {
         title: "Адреса и контакты контроллирующих органов",
         addresses: [
-            {name: "Тата", address: "Туту", telephone: "+7 (999) 999 88 77"},
+            {name: "ТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТата", address: "Туту", telephone: "+7 (999) 999 88 77"}, // TODO: do width limits for text
             {name: "Тата", address: "Туту", telephone: "+7 (999) 999 88 77"},
             {name: "Тата", address: "Туту", telephone: "+7 (999) 999 88 77"}
         ]

@@ -1,4 +1,5 @@
 import "./styles/boxComponents.scss"
+import "./styles/boxComponentsMedia.scss"
 import Diamond from "/src/assets/about-us/Content/hexagon-fill.svg"
 
 export default function BoxDiamondLink({isAddresses = false, isPrices = false, info}) {

@@ -8,11 +8,12 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    word-break: break-word;
+
     span {
       font-size: 1.5rem;
       font-family: "PT Sans", serif;
       color: var(--secondary-gray);
-      word-break: break-word;
     }
   }
 
@@ -20,7 +21,6 @@
     display: flex;
     flex-direction: column;
     gap: 29px;
-
     a {
       font-family: "PT Sans", serif;
       font-size: 1.5rem;
@@ -45,6 +45,7 @@
     align-items: center;
     flex-direction: row;
     gap: 22px;
+    word-break: break-word;
 
     &-text {
       font-family: "PT Sans", serif;

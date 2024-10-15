@@ -21,7 +21,7 @@ export default function Header() {
                 </Navbar.Collapse>
                 <Nav className="header__right-buttons" id="basic-nav">
                     <div className="header__city">
-                        <img src={CityPicture} />
+                        <img src={CityPicture} alt="Picture of city"/>
                         <Nav.Link className="header__city-text" href="#city">г. Сим</Nav.Link> {/* TODO: NavLink -> a */}
                     </div>
                     <Button buttonText="Обратная связь"/>
