@@ -18,13 +18,13 @@
   color: var(--primary-white);
 }
 
-.about__divider-upper {
+.divider__upper {
   min-width: 12px;
   max-width: 12px;
   background: linear-gradient(180deg, #0097a9 0%, rgba(0, 151, 169, 0) 100%);
 }
 
-.about__divider-lower {
+.divider__lower {
   min-width: 12px;
   max-width: 12px;
   background: linear-gradient(180deg, rgba(0, 151, 169, 0) 0%, #0097a9 100%);

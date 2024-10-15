@@ -1,0 +1,74 @@
+
+.label {
+  display: flex;
+  flex-direction: row;
+  gap: 1.25rem;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    span {
+      font-size: 1.5rem;
+      font-family: "PT Sans", serif;
+      color: var(--secondary-gray);
+      word-break: break-word;
+    }
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: 29px;
+
+    a {
+      font-family: "PT Sans", serif;
+      font-size: 1.5rem;
+      color: var(--secondary-black);
+    }
+  }
+
+  &__link {
+
+  }
+}
+
+.link {
+  &__wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 22px;
+
+    &-text {
+      font-family: "PT Sans", serif;
+      font-size: 1.5rem;
+    }
+
+    a {
+      font-family: "PT Sans", serif;
+      font-size: 1.5rem;
+      color: var(--secondary-black);
+    }
+
+    &-info {
+
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  &__diamond {
+
+  }
+}

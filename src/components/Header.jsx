@@ -14,7 +14,7 @@ export default function Header() {
                 <Navbar.Collapse>
                     <Nav className="header__links">
                         <Nav.Link className="header__link" href="/about-us">О нас</Nav.Link>
-                        <Nav.Link className="header__link" href="#">Цены</Nav.Link>
+                        <Nav.Link className="header__link" href="/prices">Цены</Nav.Link>
                         <Nav.Link className="header__link" href="#">Специалисты</Nav.Link>
                         <Nav.Link className="header__link" href="#">Контакты</Nav.Link>
                     </Nav>

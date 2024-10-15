@@ -1,6 +1,6 @@
 import "./styles/components.scss"
-import "./styles/about.scss"
-import {useMediaQuery} from "react-responsive";
+import "./styles/boxComponents.scss"
+import { useMediaQuery } from "react-responsive";
 
 export default function BoxDividerLink({isDivider = true, dividerUpper = true, links}) {
 
@@ -8,17 +8,17 @@ export default function BoxDividerLink({isDivider = true, dividerUpper = true, l
 
     return (
         <>
-            <div className="about__label">
+            <div className="label">
                 {
                     !isMobile ? isDivider ?
-                            (dividerUpper ? <div className="about__divider-upper"/> :
-                                <div className="about__divider-lower"/>)
+                            (dividerUpper ? <div className="divider__upper"/> :
+                                <div className="divider__lower"/>)
                             : <></>
                         : <></>
                 }
-                <div className="about__label-links">
-                    {links.map((link, index) => (
-                        <a className="about__link" key={index}>{link.text}</a>
+                <div className="label__links">
+                    {links.map((item, index) => (
+                        <a className="label__link" href={item.link} key={index}>{item.name}</a>
                     ))}
                 </div>
             </div>
