@@ -15,7 +15,6 @@ export default function BoxLinkList({isAddresses = false, isPrices = false, info
                         <div className="about__links-item-text">Номер: {info.telephone}</div>
                     </div> : <> </>}
                     {isPrices ? <> </> : <> </>}   {/*TODO*/}
-
                 </div>
             </div>
         </>

@@ -2,6 +2,7 @@ import BoxDividerV from "./BoxDividerV.jsx";
 import {Container} from "react-bootstrap";
 import BoxDividerLink from "./BoxDividerLink.jsx";
 import BoxLinkList from "./BoxLinkList.jsx";
+import "./styles/aboutMedia.scss"
 
 export default function AboutUs() {
 
@@ -16,7 +17,7 @@ export default function AboutUs() {
     const documentInfo = {
         title: "Документы",
         text: "Этот раздел отражает суть представленных документов, включая правила," +
-            " договоры и3333333333333333 инструкции, касающиеся как услуг," +
+            " договоры и 3333333333333333 инструкции, касающиеся как услуг," +
             " так и подготовки к медицинским исследованиям"
     }
 
@@ -24,6 +25,8 @@ export default function AboutUs() {
         {text: "Link 1"},
         {text: "Link 2"},
         {text: "Link 3"},
+        {text: "Link 4"},
+        {text: "Link 5"},
     ]
 
     const addressesInfo = {
@@ -36,23 +39,34 @@ export default function AboutUs() {
     }
 
     const contactInfo = {
-        text: "Общество с ограниченной ответственностью «МЕДЛАБ74» ИНН 7457012008  КПП 745701001 ОГРН 1217400040660\n" +
-            "р/с 40702810872000042759\n" +
-            "ПАО СБЕРБАНК\n" +
-            "к/с 30101810700000000602 БИК 047501602\n" +
-            "\n" +
-            "Юридический адрес: 456020, Челябинская область, Ашинский р-н, г Сим, ул Пушкина, д. 9, помещение 2\n" +
-            "\n" +
-            "Адрес Клиники в Городе: ________________________________\n" +
-            "\n" +
-            "e-mail: medlab74@mail.ru\n" +
-            "телефон: 89514895362\n" +
-            "\n" +
-            "Директор: Герасименко Светлана Николаевна\n" +
-            "\n" +
-            "Лицензия выдана Министерством здравоохранения Свердловской области\n" +
-            "\n" +
-            "Адрес: 620014, г. Екатеринбург, ул. Вайнера, д. 34-б Телефон: +7 (343) 385-06-00, +7 (800) 100-01-53 "
+        INN: `Общество с ограниченной ответственностью «МЕДЛАБ74» ИНН 7457012008  КПП 745701001 ОГРН 1217400040660
+            р/с 40702810872000042759
+            ПАО СБЕРБАНК
+            к/с 30101810700000000602 БИК 047501602`,
+        legalAddress: `Юридический адрес: 456020, Челябинская область, Ашинский р-н, г Сим, ул Пушкина, д. 9, помещение 2`,
+        address: `Адрес Клиники в Городе: ________________________________`,
+        contacts: `e-mail: medlab74@mail.ru
+            телефон: 89514895362`,
+        director: `Директор: Герасименко Светлана Николаевна`,
+        license: `Лицензия выдана Министерством здравоохранения Свердловской области`,
+        globalContacts: `Адрес: 620014, г. Екатеринбург, ул. Вайнера, д. 34-б Телефон: +7 (343) 385-06-00, +7 (800) 100-01-53 `,
+        text: `Общество с ограниченной ответственностью «МЕДЛАБ74» ИНН 7457012008  КПП 745701001 ОГРН 1217400040660
+р/с 40702810872000042759
+ПАО СБЕРБАНК
+к/с 30101810700000000602 БИК 047501602
+
+Юридический адрес: 456020, Челtябинская область, Ашинский р-н, г Сим, ул Пушкина, д. 9, помещение 2
+
+Адрес Клиники в Городе: ________________________________
+
+e-mail: medlab74@mail.ru
+телефон: 89514895362
+
+Директор: Герасименко Светлана Николаевна
+
+Лицензия выдана Министерством здравоохранения Свердловской области
+
+Адрес: 620014, г. Екатеринбург, ул. Вайнера, д. 34-б Телефон: +7 (343) 385-06-00, +7 (800) 100-01-53 `
     }
 
     return (
@@ -60,17 +74,22 @@ export default function AboutUs() {
             <div className="about__container">
                 <BoxDividerV info={aboutUsInfo}/>
                 <div className="about__main-content">
-                    <div className="about__legal-info">
-                        <BoxDividerV info={documentInfo}/>
+                    <div className="about__legal-info about__main-content-item">
+                        <BoxDividerV info={documentInfo} dividerUpper={false}/>
                         <BoxDividerLink links={links}/>
                     </div>
-                    <div className="about__links">
-                        <BoxDividerV isDivider={false} isText={false} info={addressesInfo} />
+                    <div className="about__links about__main-content-item">
+                        <BoxDividerV isDivider={false} isText={false} info={addressesInfo}/>
                         {addressesInfo.addresses.map((item, index) => (
                             <BoxLinkList isAddresses={true} info={item} key={index}/>
                         ))}
                     </div>
-                    <BoxDividerV isTitle={false} info={contactInfo} />
+                    <div className="about__main-content-item">
+                        <BoxDividerV style={{color: "var(--secondary-black)", whiteSpace: "pre-wrap", fontSize: "1rem"}}
+                                     isTitle={false}
+                                     info={contactInfo}
+                                     dividerUpper={false}/>
+                    </div>
                 </div>
             </div>
         </Container>
