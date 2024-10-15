@@ -1,0 +1,17 @@
+.placeholder {
+  display: flex;
+  justify-content: center;
+  height: 800px;
+}
+
+.home {
+  &__main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__picture {
+    max-width: 100%;
+    min-height: 100%;
+  }
+}
