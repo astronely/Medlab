@@ -31,8 +31,21 @@
   &__double {
     &-container {
       display: flex;
-      flex-direction: row;
       gap: 40px;
     }
+  }
+}
+
+/* >=xs */
+@media (min-width: 0px) {
+  .infobox__double-container {
+    flex-direction: column;
+  }
+}
+
+/* md */
+@media (min-width: 768px) {
+  .infobox__double-container {
+    flex-direction: row;
   }
 }

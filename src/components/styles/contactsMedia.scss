@@ -13,19 +13,29 @@
     &__map-container {
       max-width: 100%; // TODO: Подумать??
     }
+
+    &__button {
+      width: 75%;
+    }
   }
 }
 
 /* <=xs */
 @media (max-width: 576px) {
-  .contacts__container {
-    padding: 0 12px;
+  .contacts {
+    &__container {
+      padding: 0 12px;
+    }
   }
 }
 
 /* sm */
 @media (min-width: 576px) {
-
+  .contacts {
+    &__button {
+      width: 56%;
+    }
+  }
 }
 
 /* md */
@@ -45,6 +55,10 @@
       min-width: 65%;
       max-width: 65%;
     }
+
+    &__button {
+      width: 48%;
+    }
   }
 }
 
@@ -55,7 +69,6 @@
       min-width: 56%;
       max-width: 56%;
     }
-
   }
 }
 
@@ -74,6 +87,10 @@
     &__map-container {
       width: 40%;
       max-width: 100%; // TODO: Подумать??
+    }
+
+    &__button {
+      width: 40%;
     }
   }
 }

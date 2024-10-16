@@ -44,7 +44,7 @@ export default function Contacts() {
                         <InfoBox isAddress={true} info={addressInfo}/>
                         <DoubleInfoBox info={scheduleInfo}/>
                         <InfoBox isContacts={true} info={directorInfo}/>
-                        <Button style={{fontSize: "2.5rem", width: "50%"}} buttonText="Обратная связь"/>
+                        <Button style={{fontSize: "2rem"}} className="contacts__button" buttonText="Обратная связь"/>
                     </div>
                     <div className="contacts__map-container">
                         <YMaps>
