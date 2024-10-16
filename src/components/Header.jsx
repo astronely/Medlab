@@ -16,7 +16,7 @@ export default function Header() {
                         <Nav.Link className="header__link" href="/about-us">О нас</Nav.Link>
                         <Nav.Link className="header__link" href="/prices">Цены</Nav.Link>
                         <Nav.Link className="header__link" href="#">Специалисты</Nav.Link>
-                        <Nav.Link className="header__link" href="#">Контакты</Nav.Link>
+                        <Nav.Link className="header__link" href="/contacts">Контакты</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 <Nav className="header__right-buttons" id="basic-nav">

@@ -30,24 +30,6 @@ export default function BoxDiamondLink({isAddresses = false, isPrices = false, i
 
                 ))}
             </div>
-            {/*<div className="link__item">*/}
-            {/*    <div className="link__diamond">*/}
-            {/*        <img src={Diamond} alt="hexagon image"/>*/}
-            {/*    </div>*/}
-            {/*    {*/}
-            {/*        isAddresses ?*/}
-            {/*            <div className="link__item-info">*/}
-            {/*                <div className="link__item-text">Название: {info.name}</div>*/}
-            {/*                <div className="link__item-text">Адрес: {info.address}</div>*/}
-            {/*                <div className="link__item-text">Номер: {info.telephone}</div>*/}
-            {/*            </div>*/}
-            {/*            : <> </>}*/}
-            {/*    {*/}
-            {/*        isPrices ?*/}
-            {/*            <a className="link__item-text" href={info.link}>{info.name}</a>*/}
-            {/*            : <> </>*/}
-            {/*    }*/}
-            {/*</div>*/}
         </div>
     )
 }

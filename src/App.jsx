@@ -3,32 +3,37 @@ import Home from "./pages/Home.jsx";
 import AboutUsPage from "./pages/AboutUsPage.jsx";
 import PricesPage from "./pages/PricesPage.jsx";
 import LegalInformationPage from "./pages/LegalInformationPage.jsx";
+import ContactsPage from "./pages/ContactsPage.jsx";
 
 function App() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <Home />
+            element: <Home/>
         },
         {
             path: '/about-us',
-            element: <AboutUsPage />,
+            element: <AboutUsPage/>,
         },
         {
             path: '/prices',
-            element: <PricesPage />
+            element: <PricesPage/>
         },
         {
             path: '/legal-info',
-            element: <LegalInformationPage />
+            element: <LegalInformationPage/>
+        },
+        {
+            path: '/contacts',
+            element: <ContactsPage/>
         }
     ]);
 
-  return (
-    <>
-        <RouterProvider router={router} />
-    </>
-  )
+    return (
+        <>
+            <RouterProvider router={router}/>
+        </>
+    )
 }
 
 export default App
