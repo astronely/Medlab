@@ -1,7 +1,8 @@
 import "../styles/components.scss"
 
-export default function Button({buttonText, style= {}, className = ""}) {
+export default function Button({buttonText, style= {}, className = "", onClickAction}) {
+
     return(
-        <button style={style} className={`main-button ${className}`}>{buttonText}</button>
+        <button onClick={onClickAction} style={style} className={`main-button ${className}`}>{buttonText}</button>
     )
 }

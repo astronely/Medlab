@@ -4,6 +4,7 @@ import AboutUsPage from "./pages/AboutUsPage.jsx";
 import PricesPage from "./pages/PricesPage.jsx";
 import LegalInformationPage from "./pages/LegalInformationPage.jsx";
 import ContactsPage from "./pages/ContactsPage.jsx";
+import {ModalManager} from "./components/modal/ModalManager.jsx";
 
 function App() {
     const router = createBrowserRouter([
@@ -32,6 +33,7 @@ function App() {
     return (
         <>
             <RouterProvider router={router}/>
+            <ModalManager />
         </>
     )
 }

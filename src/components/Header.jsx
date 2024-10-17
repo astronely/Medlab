@@ -4,8 +4,12 @@ import "./styles/header.scss"
 import CityPicture from "/src/assets/about-us/nav/Vector.svg"
 import Logo from "./ui/Logo.jsx"
 import Button from "./ui/Button.jsx"
+import {useModal} from "../hooks/useModal.js";
+import {openModal} from "../utils/modalUtils.js";
 
 export default function Header() {
+    const {setIsActive, setModal} = useModal();
+    const feedbackModalName = "feedback";
 
     return (
         <Navbar expand="lg" className={styles.bg}>
@@ -24,7 +28,7 @@ export default function Header() {
                         <img src={CityPicture} alt="Picture of city"/>
                         <Nav.Link className="header__city-text" href="#city">г. Сим</Nav.Link> {/* TODO: NavLink -> a */}
                     </div>
-                    <Button buttonText="Обратная связь"/>
+                    <Button onClickAction={() => openModal(setIsActive, setModal, feedbackModalName)} buttonText="Обратная связь"/>
                 </Nav>
                 <Navbar.Toggle/>
             </Container>
