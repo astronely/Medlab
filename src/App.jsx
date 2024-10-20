@@ -5,6 +5,9 @@ import PricesPage from "./pages/PricesPage.jsx";
 import LegalInformationPage from "./pages/LegalInformationPage.jsx";
 import ContactsPage from "./pages/ContactsPage.jsx";
 import {ModalManager} from "./components/modal/ModalManager.jsx";
+import SpecialistsPage from "./pages/SpecialistsPage.jsx";
+import AdminLoginPage from "./pages/AdminLoginPage.jsx";
+import {AdminPanelPage} from "./pages/AdminPanelPage.jsx";
 
 function App() {
     const router = createBrowserRouter([
@@ -27,7 +30,19 @@ function App() {
         {
             path: '/contacts',
             element: <ContactsPage/>
-        }
+        },
+        {
+            path: '/specialists',
+            element: <SpecialistsPage />
+        },
+        {
+            path: '/adminLoginPage',
+            element: <AdminLoginPage />
+        },
+        {
+            path: '/adminPanelPage',
+            element: <AdminPanelPage />
+        },
     ]);
 
     return (

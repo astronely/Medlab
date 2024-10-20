@@ -10,6 +10,7 @@
 
     --button-text-color: #FFFFFF;
     --modal-background-color: #E0E0E0;
+    --admin-background-color: #F0F0F0;
 
     main {
         flex: 1 1 auto;

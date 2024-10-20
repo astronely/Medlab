@@ -1,0 +1,111 @@
+.admin {
+  &__login {
+    &-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      height: 100%;
+      width: 100%;
+      position: fixed;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      gap: 100px;
+      padding: 40px 112px;
+      align-items: center;
+
+      background-color: var(--admin-background-color);
+      box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    &-label {
+      font-family: "PT Sans", sans-serif;
+
+      display: flex;
+      flex-direction: column;
+      padding: 0 118px 0 0;
+    }
+
+    &-title {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--primary-cyan);
+
+      padding: 10px;
+    }
+    &-text {
+      font-size: 2rem;
+      font-weight: normal;
+      padding: 10px;
+    }
+
+    &-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      width: 100%;
+    }
+
+    &-input {
+      box-shadow: 2px 4px 4px 0 rgba(0, 0, 0, 0.15);
+      background: var(--modal-background-color);
+      border: none;
+      padding: 10px;
+      font-size: 1.5rem;
+    }
+
+    &-button {
+      font-size: 3rem;
+      padding: 0 36px;
+      height: 80px;
+    }
+  }
+
+  &__panel {
+    &-container {
+      display: flex;
+      flex-direction: row;
+    }
+
+    &-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 10px 20px;
+
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+      background: var(--color-brand-white);
+
+      font-family: "PT Sans", sans-serif;
+      &-title {
+        font-size: 2.25rem;
+        color: var(--secondary-green);
+        font-weight: bold;
+      }
+      &-image {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        font-size: 1.25rem;
+        color: var(--primary-orange);
+        font-weight: bold;
+      }
+    }
+
+    &-divider {
+      height: 1024px;
+      width: 4px;
+      background: var(--secondary-green);
+    }
+
+    &-image {
+      width: 2rem;
+    }
+  }
+}

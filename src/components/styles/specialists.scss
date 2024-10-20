@@ -1,0 +1,16 @@
+.specialists {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 100px;
+    padding: 0 90px;
+    justify-content: flex-start;
+  }
+}

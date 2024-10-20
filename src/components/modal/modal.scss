@@ -53,6 +53,18 @@
     gap: 40px;
     width: fit-content;
   }
+
+  &-button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  &-error {
+    font-size: 1.25rem;
+    color: var(--primary-orange);
+  }
 }
 
 .modal__label {
@@ -79,22 +91,54 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
-  padding: 40px 20px 60px 40px;
+  padding: 0 20px 60px 40px; // was padding: 40px 20px ...
   font-family: "PT Sans", sans-serif;
   width: fit-content;
 }
 
+.modal__city {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  font-family: "PT Sans", sans-serif;
+  font-size: 28px;
+  padding: 4px;
+  color: var(--primary-orange);
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+.modal__cross {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1.25rem 1.25rem;
+  &-image {
+    width: 15px;
+    color: var(--primary-cyan);
+  }
+}
 
 /* >=xs */
 @media (min-width: 0px) {
   .modal__content {
-    width: 350px;
+    min-width: 325px;
+  }
+}
+
+/* sm */
+@media (max-width: 486px) {
+  .modal__content {
+    margin: 1rem;
   }
 }
 
 /* sm */
 @media (min-width: 576px) {
-  .modal__content {
-    width: 470px;
-  }
+
 }
