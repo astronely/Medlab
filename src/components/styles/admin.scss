@@ -1,0 +1,359 @@
+.admin {
+  &__login {
+    &-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      height: 100%;
+      width: 100%;
+      position: fixed;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      gap: 100px;
+      padding: 40px 112px;
+      align-items: center;
+
+      background-color: var(--admin-background-color);
+      box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    &-label {
+      font-family: "PT Sans", sans-serif;
+
+      display: flex;
+      flex-direction: column;
+      padding: 0 118px 0 0;
+    }
+
+    &-title {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--primary-cyan);
+
+      padding: 10px;
+    }
+    &-text {
+      font-size: 2rem;
+      font-weight: normal;
+      padding: 10px;
+    }
+
+    &-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      width: 100%;
+    }
+
+    &-input {
+      box-shadow: 2px 4px 4px 0 rgba(0, 0, 0, 0.15);
+      background: var(--modal-background-color);
+      border: none;
+      padding: 10px;
+      font-size: 1.5rem;
+    }
+
+    &-button {
+      font-size: 3rem;
+      padding: 0 36px;
+      height: 80px;
+    }
+  }
+
+  &__panel {
+    &-button {
+      background: var(--primary-white);
+      color: var(--secondary-green);
+      transition: 0.3s ease-out;
+      box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.15);
+
+      &:hover {
+        background: var(--primary-orange);
+        transition: 0.3s ease-in;
+      }
+    }
+
+    &-save {
+      &-button {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        padding: 1rem 1rem;
+        margin-bottom: 2rem;
+
+        font-size: 1.25rem;
+        color: var(--primary-orange);
+        background: transparent;
+        font-weight: bold;
+
+        border: 2px solid var(--primary-orange);
+        width: fit-content;
+        border-radius: 16px;
+
+        transition: 0.3s ease-out;
+        &:hover {
+          background: var(--primary-orange);
+          color: var(--admin-background-color);
+          transition: 0.3s ease-in;
+        }
+      }
+    }
+
+
+    &-background {
+      background: var(--admin-background-color)
+    }
+
+    &-header {
+      display: flex;
+      flex-direction: row;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+      background: var(--primary-white);
+
+      &-container {
+        display: flex;
+        flex-direction: row;
+      }
+
+      &-part {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        padding: 10px 20px;
+
+        font-family: "PT Sans", sans-serif;
+      }
+
+      &-title {
+        font-size: 2.25rem;
+        color: var(--secondary-green);
+        font-weight: bold;
+      }
+      &-image {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        font-size: 1.25rem;
+        color: var(--primary-orange);
+        font-weight: bold;
+      }
+    }
+
+    &-edit {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+      padding-left: 60px;
+    }
+
+    &-container {
+      display: flex;
+      flex-direction: row;
+    }
+
+    &-divider {
+      min-height: 100%;
+      margin-top: -200px;
+      width: 4px;
+      background: var(--secondary-green);
+    }
+
+    &-image {
+      width: 2rem;
+    }
+
+    &-city {
+      &-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 0 22px 20px 22px;
+      }
+
+      &-container {
+
+      }
+
+      &-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        background: var(--primary-white);
+        border-radius: 12px;
+        padding: 10px;
+
+        border: 4px solid transparent;
+        box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.15);
+        color: var(--secondary-green);
+        transition: 0.2s ease-out;
+
+        cursor: pointer;
+
+        &-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+
+        &-remove {
+          display: none;
+          transition: 0.3s ease-in;
+        }
+
+        &-remove.active {
+          display: block;
+          transition: 0.3s ease-out;
+        }
+      }
+
+      &-border-color {
+        border: 4px solid var(--secondary-green);
+      }
+
+      &-label.chosen {
+        border: 4px solid var(--primary-orange);
+        color: var(--primary-orange);
+        transition: 0.2s ease-in;
+      }
+
+      &-name {
+        font-family: "PT Sans", sans-serif;
+        font-size: 40px;
+        line-height: normal;
+
+      }
+    }
+  }
+
+  &__theme {
+    &-files {
+      &-container {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        font-family: "PT Sans", sans-serif;
+      }
+    }
+
+    &-orgs {
+      &-container {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      &-inputs {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 40px 60px;
+      }
+    }
+
+    &-inputs {
+      &-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 40px 60px;
+      }
+    }
+
+    &-specialist {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    &-specialists {
+      &-container {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+      &-list {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+    }
+    &-edit {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 360px;
+    }
+
+    &-title {
+      font-size: 40px;
+      font-weight: bold;
+      line-height: normal;
+      color: var(--secondary-green);
+    }
+
+    &-text {
+      font-size: 28px;
+      font-weight: bold;
+      line-height: normal;
+      color: var(--secondary-black);
+    }
+
+    &-input {
+      &-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 45%;
+      }
+
+      &-file {
+        width: fit-content;
+        height: auto;
+        background: var(--modal-background-color);
+
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        font-family: "PT Sans", sans-serif;
+        font-size: 24px;
+        color: var(--secondary-gray);
+        cursor: pointer;
+      }
+
+      &-name {
+        font-family: "PT Sans", sans-serif;
+        font-size: 1.75rem;
+        font-weight: bold;
+        color: var(--secondary-black);
+        line-height: normal;
+      }
+
+      &-textedit {
+        font-family: "PT Sans", sans-serif;
+        font-size: 1.5rem;
+        color: var(--secondary-black);
+        line-height: normal;
+
+        background-color: var(--modal-background-color);
+        border: none;
+        padding: 10px;
+        width: auto;
+      }
+    }
+  }
+}
+
+.root {
+  background: var(--admin-background-color) !important;
+}

@@ -1,0 +1,144 @@
+.modal {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(#3C3C3C, 0.4);
+  top: 0;
+  left: 0;
+  position: fixed;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.modal.active {
+  transition: 0.3s;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal__content {
+  display: none;
+  flex-direction: column;
+  width: 470px;
+  border-radius: 24px;
+  background-color: var(--primary-white);
+  transform: scale(0.5);
+  transition: 0.4s;
+}
+
+.modal__content.active {
+  display: flex;
+  transform: scale(1);
+  transition: 0.4s;
+}
+
+.modal__input {
+  font-size: 1.25rem;
+  color: var(--secondary-gray);
+
+  background-color: var(--modal-background-color);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
+  border: none;
+
+  padding: 6px 10px;
+  text-align: start;
+  width: fit-content;
+  &-side {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: fit-content;
+  }
+
+  &-button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  &-error {
+    font-size: 1.25rem;
+    color: var(--primary-orange);
+  }
+}
+
+.modal__label {
+  display: flex;
+  flex-direction: column;
+  //width: 50%;
+  &-title {
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--primary-cyan);
+
+    padding: 10px 0;
+  }
+
+  &-text {
+    font-size: 28px;
+    font-weight: normal;
+    color: var(--secondary-gray);
+    padding: 10px 10px 10px 0;
+  }
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0 20px 60px 40px; // was padding: 40px 20px ...
+  font-family: "PT Sans", sans-serif;
+  width: fit-content;
+}
+
+.modal__city {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  font-family: "PT Sans", sans-serif;
+  font-size: 28px;
+  padding: 4px;
+  color: var(--primary-orange);
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+.modal__cross {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1.25rem 1.25rem;
+  &-image {
+    width: 15px;
+    color: var(--primary-cyan);
+  }
+}
+
+/* >=xs */
+@media (min-width: 0px) {
+  .modal__content {
+    min-width: 325px;
+  }
+}
+
+/* sm */
+@media (max-width: 486px) {
+  .modal__content {
+    margin: 1rem;
+  }
+}
+
+/* sm */
+@media (min-width: 576px) {
+
+}

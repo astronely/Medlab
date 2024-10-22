@@ -1,0 +1,34 @@
+
+.contacts {
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+  }
+
+  &__main-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+    gap: 80px;
+  }
+
+  &__map-container {
+    height: 100%;
+    width: 100%;
+    //max-width: 50%;
+    max-height: 50%;
+  }
+
+  &__map {
+    width: 100%;
+    height: 500px;
+  }
+}

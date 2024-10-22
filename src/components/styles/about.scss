@@ -5,37 +5,6 @@
     gap: 60px;
   }
 
-  &__label {
-    display: flex;
-    flex-direction: row;
-    gap: 1.25rem;
-
-
-    &-content {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      span {
-        font-size: 1.5rem;
-        font-family: "PT Sans", serif;
-        color: var(--secondary-gray);
-        word-break: break-word;
-      }
-    }
-
-    &-links {
-      display: flex;
-      flex-direction: column;
-      gap: 29px;
-
-      a {
-        font-family: "PT Sans", serif;
-        font-size: 1.5rem;
-        color: var(--secondary-black);
-      }
-    }
-  }
-
   &__main {
     &-content {
       display: flex;
@@ -56,24 +25,6 @@
     display: flex;
     flex-direction: column;
     gap: 60px;
-
-    &-list {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-    }
-
-    &-item {
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      gap: 22px;
-
-      &-text {
-        font-family: "PT Sans", serif;
-        font-size: 1.5rem;
-      }
-    }
   }
 
   &__contacts {

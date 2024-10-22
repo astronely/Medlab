@@ -1,0 +1,52 @@
+/* >=xs */
+@media (min-width: 0px) {
+  .specialists {
+    &__cards {
+      padding: 0 10px;
+      justify-content: center;
+    }
+  }
+}
+
+/* <=xs */
+@media (max-width: 576px) {
+  .specialists {
+    &__container {
+      padding: 0 12px;
+    }
+  }
+}
+
+/* sm */
+@media (min-width: 576px) {
+
+}
+
+/* md */
+@media (min-width: 768px) {
+
+}
+
+/* lg */
+@media (min-width: 992px) {
+
+}
+
+/* xl */
+@media (min-width: 1200px) {
+  .specialists {
+    &__cards {
+      padding: 0 10px;
+      justify-content: flex-start;
+    }
+  }
+}
+
+/* xxl */
+@media (min-width: 1400px) {
+  .specialists {
+    &__cards {
+      padding: 0 90px;
+    }
+  }
+}

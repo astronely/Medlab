@@ -1,8 +1,9 @@
 import BoxDividerV from "./BoxDividerV.jsx";
 import {Container} from "react-bootstrap";
 import BoxDividerLink from "./BoxDividerLink.jsx";
-import BoxLinkList from "./BoxLinkList.jsx";
+import BoxDiamondLink from "./BoxDiamondLink.jsx";
 import "./styles/aboutMedia.scss"
+import "./styles/about.scss"
 
 export default function AboutUs() {
 
@@ -22,17 +23,17 @@ export default function AboutUs() {
     }
 
     const links = [
-        {text: "Link 1"},
-        {text: "Link 2"},
-        {text: "Link 3"},
-        {text: "Link 4"},
-        {text: "Link 5"},
+        {name: "Link 1", href: "#"},
+        {name: "Link 2", href: "#"},
+        {name: "Link 3", href: "#"},
+        {name: "Link 4", href: "#"},
+        {name: "Link 5", href: "#"},
     ] // TODO: links dependence from chosen city
 
     const addressesInfo = {
         title: "Адреса и контакты контроллирующих органов",
         addresses: [
-            {name: "Тата", address: "Туту", telephone: "+7 (999) 999 88 77"},
+            {name: "ТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТата", address: "Туту", telephone: "+7 (999) 999 88 77"}, // TODO: do width limits for text
             {name: "Тата", address: "Туту", telephone: "+7 (999) 999 88 77"},
             {name: "Тата", address: "Туту", telephone: "+7 (999) 999 88 77"}
         ]
@@ -80,9 +81,7 @@ e-mail: medlab74@mail.ru
                     </div>
                     <div className="about__links about__main-content-item">
                         <BoxDividerV isDivider={false} isText={false} info={addressesInfo}/>
-                        {addressesInfo.addresses.map((item, index) => (
-                            <BoxLinkList isAddresses={true} info={item} key={index}/>
-                        ))}
+                        <BoxDiamondLink isAddresses={true} info={addressesInfo.addresses}/>
                     </div>
                     <div className="about__main-content-item">
                         <BoxDividerV style={{color: "var(--secondary-black)", whiteSpace: "pre-wrap", fontSize: "1rem"}}

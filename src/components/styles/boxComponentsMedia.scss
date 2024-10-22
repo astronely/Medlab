@@ -1,0 +1,41 @@
+
+/* >=xs */
+@media (min-width: 0px) {
+
+}
+
+/* <=xs */
+@media (max-width: 576px) {
+  .link {
+    &__item{
+      &-text {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+/* sm */
+@media (min-width: 576px) {
+
+}
+
+/* md */
+@media (min-width: 768px) {
+
+}
+
+/* lg */
+@media (min-width: 992px) {
+
+}
+
+/* xl */
+@media (min-width: 1200px) {
+
+}
+
+/* xxl */
+@media (min-width: 1400px) {
+
+}

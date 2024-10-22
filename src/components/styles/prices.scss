@@ -1,0 +1,13 @@
+.prices {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+}
+
+@media (max-width: 576px) {
+  .prices__container {
+    padding: 0 12px;
+  }
+}

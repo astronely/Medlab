@@ -27,7 +27,7 @@ export default function Footer() {
                             <img src={Copyright} alt="copyright symbol"/>
                             <span className="footer__boottom-text">Copyright 2024</span>
                         </div>
-                        <span className="footer__bottom-text">Правовая информация</span>
+                        <a className="footer__bottom-text" href="/legal-info">Правовая информация</a>
                     </div>
                 </div>
             </div>

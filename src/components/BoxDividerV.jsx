@@ -1,6 +1,5 @@
 import "./styles/components.scss"
-import "./styles/about.scss"
-import "./styles/aboutMedia.scss"
+import "./styles/boxComponents.scss"
 import { useMediaQuery } from 'react-responsive';
 
 export default function BoxDividerV(
@@ -13,19 +12,15 @@ export default function BoxDividerV(
 
     return (
         <>
-            <div className="about__label">
+            <div className="label">
                 {
                     !isMobile ? isDivider ?
-                        (dividerUpper ? <div className="about__divider-upper"/> :
-                            <div className="about__divider-lower"/>)
+                        (dividerUpper ? <div className="divider__upper"/> :
+                            <div className="divider__lower"/>)
                         : <></>
                         : <></>
                 }
-                {/*{isDivider ?*/}
-                {/*    (dividerUpper ? <div className="about__divider-upper"/> :*/}
-                {/*        <div className="about__divider-lower"/>)*/}
-                {/*    : <></>}*/}
-                <div className="about__label-content">
+                <div className="label__content">
                     {isTitle ? <h2>{info.title}</h2> : <></>}
                     {isText ? <span style={style}>{info.text}</span> : <></>}
                 </div>
