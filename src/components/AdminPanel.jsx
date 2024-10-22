@@ -1,7 +1,7 @@
 import {Container} from "react-bootstrap";
 import "./styles/admin.scss"
 import AdminCityLabel from "./AdminCityLabel.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {
     AdminThemeContainerFiles,
     AdminThemeContainerInputs,
@@ -9,6 +9,7 @@ import {
     AdminThemeInput
 } from "./AdminThemeContainers.jsx";
 import Button from "./ui/Button.jsx";
+import {FormProvider, useFieldArray, useForm} from "react-hook-form";
 
 export default function AdminPanel() {
 
@@ -91,6 +92,24 @@ export default function AdminPanel() {
         setCities(cities.filter((item) => item.name !== name))
     }
 
+
+    const methods = useForm({
+        defaultValues: {
+            files: [],
+            orgs: [],
+            city: "",
+            contacts: [],
+            workTime: [],
+            specialists: [],
+        }
+    });
+
+    const {handleSubmit, control, reset} = methods;
+
+    const onSave = (data) => {
+        console.log(data)
+    }
+
     return (
         <>
             <div className="admin__panel-header">
@@ -119,7 +138,8 @@ export default function AdminPanel() {
                                                 isEditing={isEditing}
                                                 removeAction={deleteCity} key={index}/>
                             ))}
-                            <Button onClickAction={addNewCity} className="admin__panel-button" buttonText="Добавить город"/>
+                            <Button onClickAction={addNewCity} className="admin__panel-button"
+                                    buttonText="Добавить город"/>
                         </div>
                     </div>
                     <div className="admin__panel-divider"/>
@@ -127,30 +147,32 @@ export default function AdminPanel() {
                         {isActive === "" ? <> </>
                             :
                             isActive === "Общая информация" ?
-                                <>
-                                    <AdminThemeContainerFiles info={legalInfo}/>
-                                    <AdminThemeContainerFiles info={aboutInfo}/>
-                                    <AdminThemeContainerOrgs info={orgsInfo}/>
-                                    <div className="admin__panel-save-button">
+                                <FormProvider {...methods}>
+                                    <AdminThemeContainerFiles theme="files" info={legalInfo} id={"legal"} key={1}/>
+                                    <AdminThemeContainerFiles theme="files" info={aboutInfo} id={"about"} key={2}/>
+                                    <AdminThemeContainerOrgs info={orgsInfo} methods={methods} key={3}/>
+                                    <div onClick={handleSubmit(onSave)} className="admin__panel-save-button">
                                         Сохранить <img
                                         className="admin__panel-save-image"
                                         src="/src/assets/admin/Save.svg"
                                         alt="Edit button"/></div>
-                                </>
+                                </FormProvider>
                                 :
-                                <>
+                                <FormProvider {...methods}>
                                     <AdminThemeInput style={{fontSize: "40px",}}
-                                                     info={{title: "Название города", placeholder: isActive}}/>
-                                    <AdminThemeContainerInputs info={contactInfo}/>
-                                    <AdminThemeContainerInputs info={workTimeInfo}/>
-                                    <AdminThemeContainerFiles info={priceInfo}/>
-                                    <AdminThemeContainerSpecialists info={{title: "Специалисты"}}/>
-                                    <div className="admin__panel-save-button">
+                                                     info={{title: "Название города", placeholder: isActive}}
+                                                     theme="city"
+                                                     inputId={0}/>
+                                    <AdminThemeContainerInputs info={contactInfo} key={101}/>
+                                    <AdminThemeContainerInputs info={workTimeInfo} key={102}/>
+                                    <AdminThemeContainerFiles theme="prices" info={priceInfo} id={"price"}/>
+                                    <AdminThemeContainerSpecialists info={{title: "Специалисты"}} methods={methods}/>
+                                    <div onClick={handleSubmit(onSave)} className="admin__panel-save-button">
                                         Сохранить <img
                                         className="admin__panel-save-image"
                                         src="/src/assets/admin/Save.svg"
                                         alt="Edit button"/></div>
-                                </>
+                                </FormProvider>
                         }
                     </div>
                 </div>

@@ -1,7 +1,10 @@
-import {useEffect, useRef, useState} from "react";
+import {useRef, useState} from "react";
+import {Controller, useFormContext} from "react-hook-form";
 
-export function AdminThemeContainerFiles({info}) {
-    const [uploadedFiles, setUploadedFiles] = useState(null);
+export function AdminThemeContainerFiles({info, theme, id}) {
+    const {control} = useFormContext();
+
+    const [uploadedFiles, setUploadedFiles] = useState([]);
     const inputRef = useRef();
 
     const handleClick = () => {
@@ -12,8 +15,10 @@ export function AdminThemeContainerFiles({info}) {
         event.preventDefault()
     }
 
-    const handleDrop = (event) => {
+    const handleDrop = (event, onChange) => {
         event.preventDefault();
+        const files = Array.from(event.dataTransfer.files);
+        onChange(files);
         setUploadedFiles(event.dataTransfer.files)
     }
 
@@ -29,45 +34,41 @@ export function AdminThemeContainerFiles({info}) {
                 <div className="admin__theme-title">{info.title}</div>
                 <div className="admin__theme-edit">
                     <div className="admin__theme-text">{info.text}</div>
-                    <div onClick={handleClick}
-                         onDragOver={handleDragOver}
-                         onDrop={handleDrop}
-                         className="admin__theme-input-file">
-                        {uploadedFiles && uploadedFiles.length !== 0 ?
-                            Array.from(uploadedFiles).map((file, index) => <div key={index}>{file.name}</div>)
-                            : info.placeholder}
-                        <input type='file' onChange={onInputChange}
-                               multiple hidden ref={inputRef}
-                        />
-                    </div>
+                    <Controller
+                        name={`${theme}.${id}`}
+                        control={control}
+                        render={({field: {onChange}}) => (
+                            <div onClick={handleClick}
+                                 onDragOver={handleDragOver}
+                                 onDrop={(e) => handleDrop(e, onChange)}
+                                 className="admin__theme-input-file">
+                                {uploadedFiles.length !== 0 ?
+                                    Array.from(uploadedFiles).map((file, index) => <div key={index}>{file.name}</div>)
+                                    : info.placeholder}
+                                <input type='file'
+                                       onChange={(e) => {
+                                           onInputChange(e)
+                                           onChange(Array.from(e.target.files))
+                                       }}
+                                       multiple hidden ref={inputRef}
+                                />
+                            </div>
+                        )}>
+                    </Controller>
                 </div>
             </div>
         </>
     )
 }
 
-export function AdminThemeContainerInputs({info}) {
-
-    return (
-        <div style={{display: "flex", flexDirection: "column", gap: "40px"}}>
-            <div className="admin__theme-title">{info.title}</div>
-            <div className="admin__theme-inputs-container">
-                {info.inputs.map((inputInfo, index) => (
-                    <AdminThemeInput info={inputInfo} key={index}/>
-                ))}
-            </div>
-        </div>
-    )
-}
-
-export function AdminThemeContainerOrgs({info}) {
+export function AdminThemeContainerOrgs({info, methods}) {
     const [orgBoxes, setOrgBoxes] = useState([]);
     const [counter, setCounter] = useState(0);
 
     const onClickAdd = () => {
         setOrgBoxes(orgBoxes => [...orgBoxes, {
             id: counter,
-            name: counter,
+            name: "",
             address: "",
             telephone: "",
             email: ""
@@ -76,9 +77,8 @@ export function AdminThemeContainerOrgs({info}) {
     }
 
     const onClickDelete = (id) => {
-        console.log("delete id:", id)
-        console.log("array before: ", orgBoxes)
-
+        // console.log("delete id:", id)
+        methods.unregister(`orgs.${id}`)
         setOrgBoxes(orgBoxes.filter((item) => item.id !== id));
     }
 
@@ -98,18 +98,18 @@ function AdminThemeOrgsInputs({info, onClickDelete}) {
     const id = info.id;
 
     const inputsInfo = [
-        {title: "Название", placeholder: info.name},
+        {title: "Название", placeholder: id},
         {title: "Адрес", placeholder: "Адрес"},
         {title: "Телефон", placeholder: "Телефон"},
         {title: "Почта", placeholder: "Почта"}
     ]
 
-    console.log("id:", id)
     return (
         <div style={{display: "flex", flexDirection: "column", gap: "40px"}}>
             <div className="admin__theme-orgs-inputs">
                 {inputsInfo.map((inputInfo, index) => (
-                    <AdminThemeInput info={inputInfo} id={4 * id + index} key={index}/>
+                    <AdminThemeInput theme={"orgs"} info={inputInfo} id={id} inputId={4 * id + index}
+                                     key={4 * id + index}/>
                 ))}
             </div>
             <div style={{width: "fit-content"}} onClick={() => onClickDelete(info.id)}>
@@ -119,19 +119,10 @@ function AdminThemeOrgsInputs({info, onClickDelete}) {
     )
 }
 
-export function AdminThemeInput({info, id, style = {}, inputStyle={}}) {
-
-    return (
-        <div className="admin__theme-input-container">
-            <div className="admin__theme-input-name" style={style}>{info.title}</div>
-            <input style={inputStyle} key={id} type="text" className="admin__theme-input-textedit" placeholder={info.placeholder}/>
-        </div>
-    )
-}
-
-export function AdminThemeContainerSpecialists({info}) {
+export function AdminThemeContainerSpecialists({info, methods}) {
     const [specialists, setSpecialists] = useState([]);
     const [counter, setCounter] = useState(0);
+    const startIndex = 7;
 
     const onClickAdd = () => {
         setSpecialists(specialists => [...specialists, {
@@ -143,7 +134,8 @@ export function AdminThemeContainerSpecialists({info}) {
     }
 
     const onClickDelete = (id) => {
-        console.log("ID TO DELETE: ", id)
+        // console.log("ID TO DELETE: ", id)
+        methods.unregister(`specialists.${id}`)
         setSpecialists(specialists.filter((item) => item.id !== id))
     }
 
@@ -153,23 +145,98 @@ export function AdminThemeContainerSpecialists({info}) {
                                                                   alt="add box"/></div>
             <div className="admin__theme-specialists-list">
                 {specialists.map((specialist, index) => (
-                    <AdminThemeSpecialist info={specialist} onClickDelete={() => onClickDelete(specialist.id)} key={index}/>
+                    <AdminThemeSpecialist info={specialist}
+                                          specialistBoxId={index + startIndex}
+                                          onClickDelete={onClickDelete}
+                                          key={index + startIndex}/>
                 ))}
             </div>
         </div>
     )
 }
 
-function AdminThemeSpecialist({info, onClickDelete}) {
+function AdminThemeSpecialist({info, specialistBoxId, onClickDelete}) {
+    const id = info.id;
+
+    const inputsInfo = [
+        {title: "ФИО", placeholder: "Фамилия"},
+        {title: "Специальность и стаж", placeholder: "Список через запятую"}
+    ]
 
     return (
         <div className="admin__theme-specialist">
-            <img onClick={onClickDelete} src="/src/assets/admin/remove.svg" alt="add box"/>
-            <AdminThemeInput info={{title: "ФИО", placeholder: "Фамилия"}} id={info.id*2} key={info.id * 2}/>
-            <AdminThemeInput info={{title: "Специальность, стаж", placeholder: "Список через запятую"}}
-                             id={info.id*2+1}
-                             key={info.id * 2+1}
-                             inputStyle={{height: "150px"}}/>
+            <img onClick={() => onClickDelete(info.id)}
+                 src="/src/assets/admin/remove.svg"
+                 alt="add box"/>
+
+            {inputsInfo.map((item, index) => (
+                <AdminThemeInput info={item}
+                                 theme="specialists"
+                                 id={id}
+                                 inputId={id * 2 + index}
+                                 key={id * 2 + index}
+                                 inputStyle={index === 0 ? {} : {height: "150px"}}/>
+            ))}
+        </div>
+    )
+}
+
+export function AdminThemeContainerInputs({info}) {
+
+    const theme = info.title === "Контактная информация" ? "contacts" : "workTime";
+    const startIndex = info.title === "Контактная информация" ? 1 : 5;
+    return (
+        <div style={{display: "flex", flexDirection: "column", gap: "40px"}}>
+            <div className="admin__theme-title">{info.title}</div>
+            <div className="admin__theme-inputs-container">
+                {info.inputs.map((inputInfo, index) => (
+                    <AdminThemeInput info={inputInfo}
+                                     theme={theme}
+                                     inputId={index + startIndex}
+                                     key={index}/>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+export function AdminThemeInput({info, theme, id, inputId, style = {}, inputStyle = {}}) {
+    const {control} = useFormContext();
+
+    let name = "";
+    switch (theme) {
+        case "orgs":
+            name = `${theme}[${id}].${(info.title).toLowerCase()}`;
+            break;
+        case "city":
+            name = `${theme}`
+            break;
+        case "contacts":
+            name = `${theme}.${(info.title).toLowerCase()}`
+            break;
+        case "workTime":
+            name = `${theme}.${(info.title).toLowerCase()}`
+            break;
+        case "specialists":
+            name = `${theme}[${id}].${(info.title).toLowerCase()}`
+    }
+
+    return (
+        <div className="admin__theme-input-container">
+            <div className="admin__theme-input-name" style={style}>{info.title}</div>
+            <Controller
+                name={name}
+                control={control}
+                render={({field}) => (
+                    <input {...field}
+                           style={inputStyle}
+                           key={inputId}
+                           type="text"
+                           className="admin__theme-input-textedit"
+                           placeholder={inputId}/>
+                )}>
+
+            </Controller>
         </div>
     )
 }
