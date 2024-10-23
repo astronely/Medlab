@@ -6,9 +6,13 @@ import Logo from "./ui/Logo.jsx"
 import Button from "./ui/Button.jsx"
 import {useModal} from "../hooks/useModal.js";
 import {openModal} from "../utils/modalUtils.js";
+import {useState} from "react";
+import {useApp} from "../hooks/useApp.js";
 
 export default function Header() {
     const {setIsActive, setModal} = useModal();
+    const {currentCity} = useApp();
+
     const feedbackModalName = "feedback";
     const cityModalName = "chooseCity"
 
@@ -28,7 +32,7 @@ export default function Header() {
                     <div className="header__city">
                         <img src={CityPicture} alt="Picture of city"/>
                         <Nav.Link onClick={() => openModal(setIsActive, setModal, cityModalName)}
-                             className="header__city-text">г. Сим</Nav.Link>
+                             className="header__city-text">{currentCity}</Nav.Link>
                     </div>
                     <Button onClickAction={() => openModal(setIsActive, setModal, feedbackModalName)} buttonText="Обратная связь"/>
                 </Nav>

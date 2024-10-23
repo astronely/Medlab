@@ -19,7 +19,7 @@ export default function CityModal({open = false}) {
                 </div>
                 <div className="modal__city-list">
                     {cities.map((cityName, index) => (
-                        <CityString cityName={cityName} key={index} />
+                        <CityString cityName={cityName} key={index} open={open}/>
                     ))}
                 </div>
             </form>
