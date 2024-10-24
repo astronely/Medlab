@@ -1,5 +1,7 @@
 import {useRef, useState} from "react";
 import {Controller, useFormContext} from "react-hook-form";
+import AddImage from "/src/assets/admin/add.svg"
+import RemoveImage from "/src/assets/admin/remove.svg"
 
 export function AdminThemeContainerFiles({
                                              info,
@@ -112,7 +114,7 @@ export function AdminThemeContainerOrgs({info, methods}) {
     return (
         <div className="admin__theme-orgs-container">
             <div className="admin__theme-title">
-                {info.title} <img onClick={onClickAdd} src="/src/assets/admin/add.svg" alt="add box"/>
+                {info.title} <img onClick={onClickAdd} src={AddImage} alt="add box"/>
             </div>
             {orgBoxes.map((box, index) => (
                 <AdminThemeOrgsInputs info={box} onClickDelete={onClickDelete} key={index}/>
@@ -140,7 +142,7 @@ function AdminThemeOrgsInputs({info, onClickDelete}) {
                 ))}
             </div>
             <div style={{width: "fit-content"}} onClick={() => onClickDelete(info.id)}>
-                <img style={{width: "48px"}} src="/src/assets/admin/remove.svg" alt="remove box"/>
+                <img style={{width: "48px"}} src={RemoveImage} alt="remove box"/>
             </div>
         </div>
     )
@@ -168,7 +170,7 @@ export function AdminThemeContainerSpecialists({info, methods}) {
 
     return (
         <div className="admin__theme-specialists-container">
-            <div className="admin__theme-title">{info.title} <img onClick={onClickAdd} src="/src/assets/admin/add.svg"
+            <div className="admin__theme-title">{info.title} <img onClick={onClickAdd} src={AddImage}
                                                                   alt="add box"/></div>
             <div className="admin__theme-specialists-list">
                 {specialists.map((specialist, index) => (
@@ -207,7 +209,7 @@ function AdminThemeSpecialist({info, onClickDelete}) {
                                        inputStyle={index === 2 ? {height: "150px"} : {}}/>
             ))}
             <img onClick={() => onClickDelete(info.id)}
-                 src="/src/assets/admin/remove.svg"
+                 src={RemoveImage}
                  alt="remove box"/>
         </div>
     )
@@ -234,7 +236,7 @@ export function AdminThemeContainerPictures({info, methods}) {
 
     return (
         <div className="admin__theme-specialists-container">
-            <div className="admin__theme-title">{info.title} <img onClick={onClickAdd} src="/src/assets/admin/add.svg"
+            <div className="admin__theme-title">{info.title} <img onClick={onClickAdd} src={AddImage}
                                                                   alt="add box"/></div>
             <div className="admin__theme-specialists-list">
                 {pictures.map((picture, index) => (
@@ -272,7 +274,7 @@ function AdminThemePicture({info, onClickDelete}) {
                                           styleContainer={{gap: "0"}}/>
             ))}
             <img onClick={() => onClickDelete(info.id)}
-                 src="/src/assets/admin/remove.svg"
+                 src={RemoveImage}
                  alt="remove box"/>
         </div>
     )

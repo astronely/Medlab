@@ -13,7 +13,7 @@ export default function Footer() {
         <Container>
             <div className="footer">
                 <div className="footer__top">
-                    <Logo/>
+                    <Logo />
                     <div className="footer__links">
                         <SocialLink picture={Whatsapp} text="Whatsapp"/>
                         <SocialLink picture={VK} text="VK"/>

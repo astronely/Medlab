@@ -10,6 +10,8 @@ import {
 } from "./AdminThemeContainers.jsx";
 import Button from "./ui/Button.jsx";
 import {FormProvider, useForm} from "react-hook-form";
+import {ConfirmDeleteModal} from "./modal/ConfirmModal.jsx";
+import {useModal} from "../hooks/useModal.js";
 
 export default function AdminPanel() {
 
@@ -71,6 +73,10 @@ export default function AdminPanel() {
         placeholder: "кнопка загрузки файлов/область прикреп.файлов"
     }
 
+
+    const {modal} = useModal();
+
+    const [cityToDelete, setCityToDelete] = useState({});
     const [cities, setCities] = useState([
         {name: "Общая информация"},
         {name: "Сим"},
@@ -137,11 +143,12 @@ export default function AdminPanel() {
                                 <AdminCityLabel info={city} onClick={onClick}
                                                 isActive={isActive}
                                                 isEditing={isEditing}
-                                                removeAction={deleteCity} key={index}/>
+                                                setCity={setCityToDelete} key={index}/>
                             ))}
                             <Button onClickAction={addNewCity} className="admin__panel-button"
                                     buttonText="Добавить город"/>
                         </div>
+                        <ConfirmDeleteModal open={modal === "confirm"} deleteAction={deleteCity} item={cityToDelete}/>
                     </div>
                     <div className="admin__panel-divider"/>
                     <div style={{width: "65%"}} className="admin__panel-edit">

@@ -1,43 +1,118 @@
-import {Container, Nav, Navbar, NavbarBrand} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import styles from "./styles/header.module.scss"
 import "./styles/header.scss"
+import "./styles/headerMedia.scss"
 import CityPicture from "/src/assets/about-us/nav/house.svg"
+import Envelope from "/src/assets/envelope.svg"
+import Toggle from "/src/assets/toggle.svg"
 import Logo from "./ui/Logo.jsx"
 import Button from "./ui/Button.jsx"
 import {useModal} from "../hooks/useModal.js";
 import {openModal} from "../utils/modalUtils.js";
-import {useState} from "react";
 import {useApp} from "../hooks/useApp.js";
+import {Link} from "react-router-dom";
+import {useMediaQuery} from "react-responsive";
+import {useState} from "react";
 
 export default function Header() {
     const {setIsActive, setModal} = useModal();
     const {currentCity} = useApp();
+    const [isCollapsedLinksOpen, setIsCollapsedLinksOpen] = useState(false);
 
     const feedbackModalName = "feedback";
-    const cityModalName = "chooseCity"
+    const cityModalName = "chooseCity";
+
+    const isXl = useMediaQuery({minWidth: 1200});
+    const isMd = useMediaQuery({minWidth: 768});
+    const isSm = useMediaQuery({minWidth: 0});
+
+    const openCollapsedLinks = () => {
+        setIsCollapsedLinksOpen(!isCollapsedLinksOpen);
+    }
 
     return (
-        <Navbar expand="lg" className={styles.bg}>
+        <div className={styles.bg}>
             <Container className="header">
-                <NavbarBrand href="/"><Logo /></NavbarBrand>
-                <Navbar.Collapse>
-                    <Nav className="header__links">
-                        <Nav.Link className="header__link" href="/about-us">О нас</Nav.Link>
-                        <Nav.Link className="header__link" href="/prices">Цены</Nav.Link>
-                        <Nav.Link className="header__link" href="/specialists">Специалисты</Nav.Link>
-                        <Nav.Link className="header__link" href="/contacts">Контакты</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
-                <Nav className="header__right-buttons" id="basic-nav">
-                    <div className="header__city">
-                        <img src={CityPicture} alt="Picture of city"/>
-                        <Nav.Link onClick={() => openModal(setIsActive, setModal, cityModalName)}
-                             className="header__city-text">{currentCity}</Nav.Link>
-                    </div>
-                    <Button onClickAction={() => openModal(setIsActive, setModal, feedbackModalName)} buttonText="Обратная связь"/>
-                </Nav>
-                <Navbar.Toggle/>
+                {isMd ?
+                    <>
+                        <Logo isLink={true}/>
+                        <div className="header__links">
+                            <Link className="header__link" to="/about-us">О нас</Link>
+                            <Link className="header__link" to="/prices">Цены</Link>
+                            <Link className="header__link" to="/specialists">Специалисты</Link>
+                            <Link className="header__link" to="/contacts">Контакты</Link>
+                        </div>
+
+                        <div className="header__right-buttons">
+                            <div className="header__city">
+                                <img src={CityPicture} alt="Picture of city"/>
+                                <div onClick={() => openModal(setIsActive, setModal, cityModalName)}
+                                     className="header__city-text">{currentCity}</div>
+                            </div>
+                            {isXl ?
+                                <Button onClickAction={() => openModal(setIsActive, setModal, feedbackModalName)}
+                                        buttonText="Обратная связь"/>
+                                : <img src={Envelope}
+                                       onClick={() => openModal(setIsActive, setModal, feedbackModalName)}
+                                       alt="Feedback Modal"/>
+                            }
+                        </div>
+                    </>
+                    :
+                    <div className="header__collapse">
+                        <div className="header__collapse-top">
+                            <Logo isLink={true}/>
+                            <div className="header__collapse-right">
+                                <div className="header__city">
+                                    <img src={CityPicture} alt="Picture of city"/>
+                                    <div onClick={() => openModal(setIsActive, setModal, cityModalName)}
+                                         className="header__city-text">{currentCity}</div>
+                                </div>
+                                <img
+                                    onClick={openCollapsedLinks}
+                                    src={Toggle}
+                                    alt="Toggle image"/>
+                            </div>
+                        </div>
+                        <div className={`header__collapse-bottom ${isCollapsedLinksOpen ? "active" : "hidden"}`}>
+                            <div className="header__links">
+                                <Link className="header__link" to="/about-us">О нас</Link>
+                                <Link className="header__link" to="/prices">Цены</Link>
+                                <Link className="header__link" to="/specialists">Специалисты</Link>
+                                <Link className="header__link" to="/contacts">Контакты</Link>
+                            </div>
+                            <Button className="header__collapse-button"
+                                    onClickAction={() => openModal(setIsActive, setModal, feedbackModalName)}
+                                    buttonText="Обратная связь"/>
+                        </div>
+                    </div>}
+
             </Container>
-        </Navbar>
+        </div>
     )
+
+    // return (
+    //     <Navbar expand="lg" className={styles.bg}>
+    //         <Container className="header">
+    //             <NavbarBrand href="/"><Logo /></NavbarBrand>
+    //             <Navbar.Collapse>
+    //                 <Nav className="header__links">
+    //                     <Nav.Link className="header__link" href="/about-us">О нас</Nav.Link>
+    //                     <Nav.Link className="header__link" href="/prices">Цены</Nav.Link>
+    //                     <Nav.Link className="header__link" href="/specialists">Специалисты</Nav.Link>
+    //                     <Nav.Link className="header__link" href="/contacts">Контакты</Nav.Link>
+    //                 </Nav>
+    //             </Navbar.Collapse>
+    //             <Nav className="header__right-buttons" id="basic-nav">
+    //                 <div className="header__city">
+    //                     <img src={CityPicture} alt="Picture of city"/>
+    //                     <Nav.Link onClick={() => openModal(setIsActive, setModal, cityModalName)}
+    //                          className="header__city-text">{currentCity}</Nav.Link>
+    //                 </div>
+    //                 <Button onClickAction={() => openModal(setIsActive, setModal, feedbackModalName)} buttonText="Обратная связь"/>
+    //             </Nav>
+    //             <Navbar.Toggle/>
+    //         </Container>
+    //     </Navbar>
+    // )
 }

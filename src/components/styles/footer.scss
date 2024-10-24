@@ -20,6 +20,8 @@
       padding: 40px 0 20px 0;
       border-radius: 0;
       gap: 84px;
+
+      word-break: break-word;
     }
 
     &-copyright {
@@ -27,6 +29,7 @@
       flex-direction: row;
       gap: 6px;
     }
+
   }
 
   &__links {
@@ -34,5 +37,13 @@
     flex-direction: column;
     gap: 8px;
     padding: 20px 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer__bottom {
+    &-copyright {
+      padding-left: 12px;
+    }
   }
 }
