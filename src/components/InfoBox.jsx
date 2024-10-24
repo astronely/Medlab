@@ -1,12 +1,13 @@
 import "./styles/infobox.scss"
-
+import {useAnimateOnMount} from "./../hooks/useAnimateOnMount.js";
 export default function InfoBox({
                                     isAddress = false, isSchedule = false,
                                     isContacts = false, isTests = false, info
                                 }) {
+    const isActive = useAnimateOnMount();
 
     return (
-        <div className="infobox__container">
+        <div className={`infobox__container ${isActive ? 'active' : ''}`}>
             {isAddress ?
                 <div className="infobox__info">
                     <div className="infobox__title">Адрес:</div>
