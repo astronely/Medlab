@@ -1,8 +1,18 @@
-
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .label {
   display: flex;
   flex-direction: row;
   gap: 1.25rem;
+  animation: slideInFromTop 1s;
 
   &__content {
     display: flex;
@@ -38,6 +48,19 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+
+    &.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    &.hidden {
+      opacity: 0;
+      transform: translateX(60px);
+    }
   }
 
   &__item {

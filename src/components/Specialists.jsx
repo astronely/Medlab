@@ -62,7 +62,8 @@ export default function Specialists() {
                 <BoxDividerV info={specialistsInfo} />
                 <div className="specialists__cards">
                     {specialists.map((specialist, index) => (
-                        <SpecialistCard specialist={specialist} key={index} />
+                        <SpecialistCard specialist={specialist} style={{ animationDelay: `${index * 0.5}s`}} key={index} />
+
                     ))}
                 </div>
             </div>
