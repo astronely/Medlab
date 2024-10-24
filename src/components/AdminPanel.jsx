@@ -12,6 +12,8 @@ import Button from "./ui/Button.jsx";
 import {FormProvider, useForm} from "react-hook-form";
 import {ConfirmDeleteModal} from "./modal/ConfirmModal.jsx";
 import {useModal} from "../hooks/useModal.js";
+import SaveImage from "/src/assets/admin/Save.svg"
+import EditImage from "/src/assets/admin/Pencil.svg"
 
 export default function AdminPanel() {
 
@@ -126,7 +128,7 @@ export default function AdminPanel() {
                             <div className="admin__panel-header-title">Выберите город</div>
                             <div className="admin__panel-header-image"><img className="admin__panel-image"
                                                                             onClick={() => setIsEditing(!isEditing)}
-                                                                            src="/src/assets/admin/Pencil.svg"
+                                                                            src={EditImage}
                                                                             alt="Edit button"/></div>
                         </div>
                         <div style={{width: "65%"}} className="admin__panel-header-part">
@@ -165,7 +167,7 @@ export default function AdminPanel() {
                                     <div onClick={handleSubmit(onSave)} className="admin__panel-save-button">
                                         Сохранить <img
                                         className="admin__panel-save-image"
-                                        src="/src/assets/admin/Save.svg"
+                                        src={SaveImage}
                                         alt="Edit button"/></div>
                                 </FormProvider>
                                 :
@@ -190,7 +192,7 @@ export default function AdminPanel() {
                                     <div onClick={handleSubmit(onSave)} className="admin__panel-save-button">
                                         Сохранить <img
                                         className="admin__panel-save-image"
-                                        src="/src/assets/admin/Save.svg"
+                                        src={SaveImage}
                                         alt="Edit button"/></div>
                                 </FormProvider>
                         }
