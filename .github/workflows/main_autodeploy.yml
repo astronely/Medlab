@@ -9,9 +9,7 @@ jobs:
   
     runs-on: ubuntu-latest
     
-    steps:
-    - uses: actions/checkout@v2
-    
+    steps:    
     - name: Deploy using ssh
       uses: appleboy/ssh-action@master
       with:
@@ -22,5 +20,7 @@ jobs:
         script: |
           cd Medlab
           git pull origin main
+          export NVM_DIR=~/.nvm
+          source ~/.nvm/nvm.sh  
           npm install --only=prod
           npm run build
