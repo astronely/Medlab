@@ -1,6 +1,6 @@
 import {Modal} from './Modal.jsx';
 import {useModal} from "../../hooks/useModal.js";
-import 'modal.scss'
+import './modal.scss'
 import Button from "../ui/Button.jsx";
 
 export function ConfirmDeleteModal({open = false, deleteAction, item}) {
