@@ -6,8 +6,13 @@ import Button from "./ui/Button.jsx";
 import {YMaps, Map, Placemark} from '@pbe/react-yandex-maps';
 import "./styles/contacts.scss"
 import "./styles/contactsMedia.scss"
+import {openModal} from "../utils/modalUtils.js";
+import {useModal} from "../hooks/useModal.js";
 
 export default function Contacts() {
+
+    const {setIsActive, setModal} = useModal();
+    const feedbackModalName = "feedback";
 
     const contactsInfo = {
         title: "Контакты",
@@ -44,7 +49,10 @@ export default function Contacts() {
                         <InfoBox isAddress={true} info={addressInfo}/>
                         <DoubleInfoBox info={scheduleInfo}/>
                         <InfoBox isContacts={true} info={directorInfo}/>
-                        <Button style={{fontSize: "2rem", borderRadius: "24px", padding: "20px"}} className="contacts__button" buttonText="Обратная связь"/>
+                        <Button
+                            onClickAction={() => openModal(setIsActive, setModal, feedbackModalName)}
+                            style={{fontSize: "2rem", borderRadius: "24px", padding: "20px"}}
+                            className="contacts__button" buttonText="Обратная связь"/>
                     </div>
                     <div className="contacts__map-container">
                         <YMaps>

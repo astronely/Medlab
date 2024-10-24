@@ -118,7 +118,7 @@ export default function AdminPanel() {
     }
 
     return (
-        <>
+        <div className="admin__panel-wrap">
             <div className="admin__panel-header">
                 <Container>
                     <div className="admin__panel-header-container">
@@ -197,7 +197,7 @@ export default function AdminPanel() {
                     </div>
                 </div>
             </Container>
-        </>
+        </div>
 
 
     )

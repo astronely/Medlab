@@ -44,10 +44,10 @@ export default function Header() {
                         </div>
 
                         <div className="header__right-buttons">
-                            <div className="header__city">
+                            <div className="header__city"
+                                 onClick={() => openModal(setIsActive, setModal, cityModalName)}>
                                 <img src={CityPicture} alt="Picture of city"/>
-                                <div onClick={() => openModal(setIsActive, setModal, cityModalName)}
-                                     className="header__city-text">{currentCity}</div>
+                                <div className="header__city-text">{currentCity}</div>
                             </div>
                             {isXl ?
                                 <Button onClickAction={() => openModal(setIsActive, setModal, feedbackModalName)}
@@ -63,10 +63,10 @@ export default function Header() {
                         <div className="header__collapse-top">
                             <Logo isLink={true}/>
                             <div className="header__collapse-right">
-                                <div className="header__city">
+                                <div className="header__city"
+                                     onClick={() => openModal(setIsActive, setModal, cityModalName)}>
                                     <img src={CityPicture} alt="Picture of city"/>
-                                    <div onClick={() => openModal(setIsActive, setModal, cityModalName)}
-                                         className="header__city-text">{currentCity}</div>
+                                    <div className="header__city-text">{currentCity}</div>
                                 </div>
                                 <img
                                     onClick={openCollapsedLinks}

@@ -66,6 +66,14 @@
   }
 
   &__panel {
+    &-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+      background: var(--admin-background-color);
+      min-height: 100%;
+    }
+
     &-button {
       background: var(--primary-white);
       color: var(--secondary-green);
@@ -103,7 +111,6 @@
         }
       }
     }
-
 
     &-background {
       background: var(--admin-background-color)
@@ -377,5 +384,5 @@
 }
 
 .root {
-  background: var(--admin-background-color) !important;
+  //background: var(--admin-background-color);
 }
