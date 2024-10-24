@@ -1,0 +1,60 @@
+/* >=xs */
+@media (min-width: 0px) {
+
+}
+
+/* <=xs */
+@media (max-width: 576px) {
+  .header__collapse {
+    padding: 0 12px;
+
+    &-right {
+      gap: 1rem;
+    }
+  }
+}
+
+/* sm */
+@media (max-width: 767px) {
+  .header {
+    &__links {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__link {
+      background-color: var(--link-background-color);
+      padding: 4px 6px;
+      border-radius: 8px;
+    }
+  }
+}
+
+
+/* md */
+@media (min-width: 768px) {
+  .header {
+    &__link {
+      font-size: 1rem;
+    }
+  }
+}
+
+/* lg */
+@media (min-width: 992px) {
+
+}
+
+/* xl */
+@media (min-width: 1200px) {
+  .header {
+    &__link {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+/* xxl */
+@media (min-width: 1400px) {
+
+}

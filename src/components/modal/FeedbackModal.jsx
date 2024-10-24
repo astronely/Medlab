@@ -20,7 +20,7 @@ export default function FeedbackModal({open = false}) {
                     <input className="modal__input" placeholder="Номер телефона" type="text" maxLength={12}/> {/*TODO: telephone validation */}
                     <div className="modal__input-button">
                         {isError ? <div className="modal__input-error">Пожалуйста, заполните форму корректно</div> : <></>}
-                        <Button style={{fontSize: "2rem", padding: "10px 16px"}} buttonText="Отправить"/>
+                        <Button className="modal__input-button-style" buttonText="Отправить"/>
                     </div>
                 </div>
             </form>

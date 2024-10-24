@@ -6,11 +6,14 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  min-height: 80px;
 
   &__link {
-    font-size: 18px;
+    font-size: 1.25rem;
     font-family: "PT Sans", serif;
     color: var(--secondary-green);
+    text-decoration: none;
   }
 
   &__links {
@@ -29,6 +32,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 10px;
     &-text {
       font-family: "PT Sans", serif;
       font-size: 20px;
@@ -45,5 +49,55 @@
     font-family: "PT Sans", serif;
     background-color: var(--primary-cyan);
     color: var(--primary-white);
+  }
+
+  &__collapse {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    &-top {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 80px;
+    }
+
+    &-bottom {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+      gap: 2rem;
+    }
+
+    &-bottom.active {
+      max-height: 100%;
+      pointer-events: auto;
+      opacity: 1;
+      padding: 20px 0;
+
+      transition: opacity 0.3s ease-out, max-height 0.3s ease-out, padding 0.3s ease-out;
+    }
+
+    &-bottom.hidden {
+      max-height: 0;
+      pointer-events: none;
+      padding: 0;
+      opacity: 0;
+
+      transition: opacity 0.2s ease-in, max-height 0.2s ease-in, padding 0.2s ease-out;
+    }
+
+    &-right {
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+    }
+
+    &-button {
+      font-size: 1.25rem !important;
+      padding: 0.5rem 0.5rem !important;
+    }
   }
 }

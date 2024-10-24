@@ -1,15 +1,17 @@
 import {Container} from "react-bootstrap";
 import "./styles/admin.scss"
 import AdminCityLabel from "./AdminCityLabel.jsx";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {
     AdminThemeContainerFiles,
     AdminThemeContainerInputs,
-    AdminThemeContainerOrgs, AdminThemeContainerSpecialists,
+    AdminThemeContainerOrgs, AdminThemeContainerPictures, AdminThemeContainerSpecialists,
     AdminThemeInput
 } from "./AdminThemeContainers.jsx";
 import Button from "./ui/Button.jsx";
-import {FormProvider, useFieldArray, useForm} from "react-hook-form";
+import {FormProvider, useForm} from "react-hook-form";
+import {ConfirmDeleteModal} from "./modal/ConfirmModal.jsx";
+import {useModal} from "../hooks/useModal.js";
 
 export default function AdminPanel() {
 
@@ -71,6 +73,10 @@ export default function AdminPanel() {
         placeholder: "кнопка загрузки файлов/область прикреп.файлов"
     }
 
+
+    const {modal} = useModal();
+
+    const [cityToDelete, setCityToDelete] = useState({});
     const [cities, setCities] = useState([
         {name: "Общая информация"},
         {name: "Сим"},
@@ -97,14 +103,15 @@ export default function AdminPanel() {
         defaultValues: {
             files: [],
             orgs: [],
-            city: "",
+            city: [],
             contacts: [],
             workTime: [],
             specialists: [],
+            mainPictures: []
         }
     });
 
-    const {handleSubmit, control, reset} = methods;
+    const {handleSubmit} = methods;
 
     const onSave = (data) => {
         console.log(data)
@@ -136,11 +143,12 @@ export default function AdminPanel() {
                                 <AdminCityLabel info={city} onClick={onClick}
                                                 isActive={isActive}
                                                 isEditing={isEditing}
-                                                removeAction={deleteCity} key={index}/>
+                                                setCity={setCityToDelete} key={index}/>
                             ))}
                             <Button onClickAction={addNewCity} className="admin__panel-button"
                                     buttonText="Добавить город"/>
                         </div>
+                        <ConfirmDeleteModal open={modal === "confirm"} deleteAction={deleteCity} item={cityToDelete}/>
                     </div>
                     <div className="admin__panel-divider"/>
                     <div style={{width: "65%"}} className="admin__panel-edit">
@@ -150,6 +158,9 @@ export default function AdminPanel() {
                                 <FormProvider {...methods}>
                                     <AdminThemeContainerFiles theme="files" info={legalInfo} id={"legal"} key={1}/>
                                     <AdminThemeContainerFiles theme="files" info={aboutInfo} id={"about"} key={2}/>
+                                    <AdminThemeContainerPictures theme="mainPictures"
+                                                                 info={{title: "Изображения главной страницы"}}
+                                                                 methods={methods}/>
                                     <AdminThemeContainerOrgs info={orgsInfo} methods={methods} key={3}/>
                                     <div onClick={handleSubmit(onSave)} className="admin__panel-save-button">
                                         Сохранить <img
@@ -159,10 +170,19 @@ export default function AdminPanel() {
                                 </FormProvider>
                                 :
                                 <FormProvider {...methods}>
-                                    <AdminThemeInput style={{fontSize: "40px",}}
-                                                     info={{title: "Название города", placeholder: isActive}}
-                                                     theme="city"
-                                                     inputId={0}/>
+                                    <div className="admin__panel-edit-city-info">
+                                        <AdminThemeInput style={{fontSize: "40px",}}
+                                                         info={{title: "Название города", placeholder: isActive}}
+                                                         theme="city"
+                                                         inputId={0}/>
+                                        <AdminThemeInput style={{fontSize: "40px",}}
+                                                         info={{
+                                                             title: "Адрес для карт",
+                                                             placeholder: "Координаты xx.xxxxx; yy.yyyyyy"
+                                                         }}
+                                                         theme="coords"
+                                                         inputId={1}/>
+                                    </div>
                                     <AdminThemeContainerInputs info={contactInfo} key={101}/>
                                     <AdminThemeContainerInputs info={workTimeInfo} key={102}/>
                                     <AdminThemeContainerFiles theme="prices" info={priceInfo} id={"price"}/>
