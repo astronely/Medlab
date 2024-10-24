@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     
-    - name: Executing remote command
+    - name: Deploy using ssh
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -21,7 +21,6 @@ jobs:
         KEY: ${{ secrets.SSH_KEY }}
         script: |
           cd Medlab
-          git pull origin master
-          npm install
+          git pull origin main
+          npm install --only=prod
           npm run build
-          npm run preview
