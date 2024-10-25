@@ -3,8 +3,11 @@ import BoxDividerV from "./BoxDividerV.jsx";
 import SpecialistCard from "./SpecialistCard.jsx";
 import "./styles/specialists.scss"
 import "./styles/specialistsMedia.scss"
+import {useState} from "react";
 
 export default function Specialists() {
+
+    // const [specialists, setSpecialists] = useState([]); // TODO: specialists from db
 
     const specialistsInfo = {
         title: "Специалисты",
@@ -16,7 +19,7 @@ export default function Specialists() {
 
     const specialists = [
         {
-            sex: "man",
+            sex: "man", // TODO: change to gender
             experience: [
                 "job1, 5 years",
                 "job2, 2.5 years",

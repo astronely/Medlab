@@ -8,11 +8,16 @@ import "./styles/contacts.scss"
 import "./styles/contactsMedia.scss"
 import {openModal} from "../utils/modalUtils.js";
 import {useModal} from "../hooks/useModal.js";
+import {useState} from "react";
 
 export default function Contacts() {
 
     const {setIsActive, setModal} = useModal();
     const feedbackModalName = "feedback";
+
+    // const [addressInfo, setAddressInfo] = useState("Placeholder for address"); // TODO: address from db
+    // const [scheduleInfo, setScheduleInfo] = useState([]); // TODO: schedule from db
+    // const [directorInfo, setDirectorInfo] = useState({}); // TODO: director info from db
 
     const contactsInfo = {
         title: "Контакты",

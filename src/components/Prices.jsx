@@ -2,8 +2,10 @@ import {Container} from "react-bootstrap";
 import BoxDividerV from "./BoxDividerV.jsx";
 import BoxDiamondLink from "./BoxDiamondLink.jsx";
 import "./styles/prices.scss"
+import {useState} from "react";
 
 export default function Prices() {
+    // const [prices, setPrices] = useState([]); // TODO: prices from db
 
     const pricesInfo = {
         title: "Цены",

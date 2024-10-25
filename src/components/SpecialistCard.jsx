@@ -4,7 +4,7 @@ import "./styles/specialistCard.scss"
 
 export default function SpecialistCard({specialist, style={}}) {
 
-    const specialistImage = specialist.sex === "man" ? ManPlaceholder : WomanPlaceholder;
+    const specialistImage = specialist.sex === "man" ? ManPlaceholder : WomanPlaceholder; // TODO: change to gender
 
     return (
         <div className="specialist__card" style={style}>
