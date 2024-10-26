@@ -18,7 +18,7 @@ export default function BoxDiamondLink({isAddresses = false, isPrices = false, i
                                 <div className="link__item-info">
                                     <div className="link__item-text">Название: {item.name}</div>
                                     <div className="link__item-text">Адрес: {item.address}</div>
-                                    <div className="link__item-text">Номер: {item.telephone}</div>
+                                    <div className="link__item-text">Номер: {item.phone}</div>
                                 </div>
                                 : <> </>
                         }

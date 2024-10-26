@@ -2,8 +2,16 @@ import {Container} from "react-bootstrap";
 import BoxDividerV from "./BoxDividerV.jsx";
 import BoxDiamondLink from "./BoxDiamondLink.jsx";
 import "./styles/prices.scss"
+import {useEffect, useState} from "react";
+import {getLinks} from "../utils/getInfo.js";
+import {useApp} from "../hooks/useApp.js";
 
 export default function Prices() {
+    const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
+    const serverAssetsFolder = `${serverAddress}/assets/prices`;
+    const {currentCity} = useApp();
+
+    const [prices, setPrices] = useState([]);
 
     const pricesInfo = {
         title: "Цены",
@@ -12,13 +20,12 @@ export default function Prices() {
             " предложения для вашего здоровья и комфорта."
     }
 
-    const prices = [
-        {name: "price_link.pdf", link: "#"},
-        {name: "price_link.pdf", link: "#"},
-        {name: "price_link.pdf", link: "#"},
-        {name: "price_link.pdf", link: "#"},
-        {name: "price_link.pdf", link: "#"},
-    ]
+    useEffect(() => {
+        setPrices([]);
+        console.log(currentCity)
+        getLinks(prices, setPrices, "price", serverAssetsFolder, currentCity.replace("г. ", ""))
+            .catch(err => console.log(err))
+    }, [currentCity])
 
     return (
         <Container>

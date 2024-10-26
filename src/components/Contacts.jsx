@@ -8,11 +8,28 @@ import "./styles/contacts.scss"
 import "./styles/contactsMedia.scss"
 import {openModal} from "../utils/modalUtils.js";
 import {useModal} from "../hooks/useModal.js";
+import {useEffect, useState} from "react";
+import {useApp} from "../hooks/useApp.js";
+import {getCityInfo} from "../utils/getInfo.js";
 
 export default function Contacts() {
 
     const {setIsActive, setModal} = useModal();
+    const {currentCity} = useApp();
     const feedbackModalName = "feedback";
+
+    const [addressInfo, setAddressInfo] = useState("Placeholder for address"); // TODO: address from db
+    const [scheduleInfo, setScheduleInfo] = useState([
+        {
+            weekdays: "",
+            weekend: ""
+        },
+        {
+            weekdays: "",
+            weekend: ""
+        }
+    ]);
+    const [coordinates, setCoordinates] = useState([54.984868, 57.688882]); // TODO: director info from db
 
     const contactsInfo = {
         title: "Контакты",
@@ -20,25 +37,49 @@ export default function Contacts() {
             " или посетите наш офис по указанному адресу."
     }
 
-    const addressInfo = {
-        text: "Мы находимся по адресу: ул. Noname, №123"
-    }
-
-    const scheduleInfo = [
-        {
-            weekdays: "8:00-16:00",
-            weekend: "10:00-14:00"
-        },
-        {
-            weekdays: "8:00-12:00",
-            weekend: "8:00-9:00"
-        }
-    ]
-
     const directorInfo = {
         email: "email@email.com",
         telephone: "+7 (999) 999 88 77"
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await getCityInfo(currentCity.replace("г. ", ""));
+            const data = res[0];
+
+            setAddressInfo({text: res[0].address})
+
+            const coords = data.coordinates.split(";");
+            setCoordinates([parseFloat(coords[0]), parseFloat(coords[1])])
+            const rawScheduleGive = data.bio_give.split(";");
+            const rawScheduleGet = data.bio_get.split(";");
+            setScheduleInfo([
+                {
+                    weekdays: rawScheduleGive[0],
+                    weekend: rawScheduleGive[1],
+                },
+                {
+                    weekdays: rawScheduleGet[0],
+                    weekend: rawScheduleGet[1],
+                }
+            ])
+        }
+        fetchData().catch(err => {
+            console.log(err)
+            setScheduleInfo([
+                {
+                    weekdays: "",
+                    weekend: ""
+                },
+                {
+                    weekdays: "",
+                    weekend: ""
+                }
+            ])
+            setCoordinates([54.984868, 57.688882])
+            setAddressInfo({text: "Placeholder"})
+        });
+    }, [currentCity])
 
     return (
         <Container>
@@ -58,7 +99,7 @@ export default function Contacts() {
                         <YMaps>
                             <Map className="contacts__map"
                                  defaultState={{
-                                     center: [54.984868, 57.688882],
+                                     center: [coordinates[0], coordinates[1]],
                                      zoom: 16,
                                      controls: ["zoomControl"],
                                  }}

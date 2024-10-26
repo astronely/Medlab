@@ -11,6 +11,5 @@ export default function AboutUsPage() {
             </main>
             <Footer />
         </>
-
     )
 }

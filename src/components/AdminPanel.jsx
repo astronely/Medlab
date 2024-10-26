@@ -1,7 +1,7 @@
 import {Container} from "react-bootstrap";
 import "./styles/admin.scss"
 import AdminCityLabel from "./AdminCityLabel.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {
     AdminThemeContainerFiles,
     AdminThemeContainerInputs,
@@ -14,8 +14,11 @@ import {ConfirmDeleteModal} from "./modal/ConfirmModal.jsx";
 import {useModal} from "../hooks/useModal.js";
 import SaveImage from "/src/assets/admin/Save.svg"
 import EditImage from "/src/assets/admin/Pencil.svg"
+import axios from "axios";
+import {getCities, getCityInfo, getOnlyInfo, getOnlyLinksName, getSpecialistsInfo} from "../utils/getInfo.js";
 
 export default function AdminPanel() {
+    const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
 
     const legalInfo = {
         title: "Правовая информация",
@@ -38,19 +41,23 @@ export default function AdminPanel() {
         inputs: [
             {
                 title: "VK",
-                placeholder: "Ссылка"
+                placeholder: "Ссылка",
+                fieldName: "vk"
             },
             {
                 title: "Почта",
-                placeholder: "Почта"
+                placeholder: "Почта",
+                fieldName: "email"
             },
             {
                 title: "Телефон/WhatsApp",
-                placeholder: "Телефон"
+                placeholder: "Телефон",
+                fieldName: "phone"
             },
             {
                 title: "Адрес",
-                placeholder: "Адрес"
+                placeholder: "Адрес",
+                fieldName: "address"
             },
         ]
     }
@@ -60,11 +67,13 @@ export default function AdminPanel() {
         inputs: [
             {
                 title: "Прием биоматериала",
-                placeholder: "текст"
+                placeholder: "текст",
+                fieldName: "bio_get"
             },
             {
                 title: "Выдача результатов",
-                placeholder: "текст"
+                placeholder: "текст",
+                fieldName: "bio_give"
             }
         ]
     }
@@ -79,11 +88,7 @@ export default function AdminPanel() {
     const {modal} = useModal();
 
     const [cityToDelete, setCityToDelete] = useState({});
-    const [cities, setCities] = useState([
-        {name: "Общая информация"},
-        {name: "Сим"},
-        {name: "Йошка-ола"},
-        {name: "Дубайск"}]);
+    const [cities, setCities] = useState([{name: "Общая информация"}]);
 
     const [isActive, setIsActive] = useState("");
     const [isEditing, setIsEditing] = useState(false);
@@ -93,31 +98,205 @@ export default function AdminPanel() {
     }
 
     const addNewCity = () => {
-        setCities([...cities, {name: `Новый город ${cities.length}`}])
+        setCities(cities => [...cities, {name: `Новый город ${cities.length}`}])
     }
 
     const deleteCity = (name) => {
+        axios.delete(`${serverAddress}/api/city/delete/${name}`)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => console.log(err))
         setCities(cities.filter((item) => item.name !== name))
     }
 
-
     const methods = useForm({
         defaultValues: {
-            files: [],
+            files: {
+                about: undefined,
+                legal: undefined,
+                price: undefined
+            },
             orgs: [],
-            city: [],
-            contacts: [],
-            workTime: [],
+            city: {
+                name: undefined,
+                coordinates: undefined,
+                address: undefined,
+                vk: undefined,
+                email: undefined,
+                phone: undefined,
+                bio_get: undefined,
+                bio_give: undefined
+            },
             specialists: [],
-            mainPictures: []
+            mainPictures: {
+                xxl: undefined,
+                xl: undefined,
+                lg: undefined,
+                md: undefined,
+                sm: undefined
+            }
         }
     });
 
-    const {handleSubmit} = methods;
+    const {handleSubmit, setValue, reset} = methods;
 
-    const onSave = (data) => {
-        console.log(data)
+    const createFile = async (files, theme, city = "") => {
+        const formData = new FormData();
+
+        if (files === undefined || files.length === 0) {
+            return;
+        }
+        // console.log(files)
+
+        for (let file of files) {
+            // console.log(file)
+            formData.append(`${theme}Files`, file);
+        }
+
+        if (city !== "") {
+            formData.append("currentCity", city);
+        }
+
+        axios.post(`${serverAddress}/api/${theme}/create`, formData)
+            .then(res => {
+                console.log(`${theme} info successfully updated!`);
+            })
+            .catch(err => console.log(err));
     }
+
+    const createText = async (data, theme) => {
+        // console.log("CREATE TEXT: ", data)
+        let dataToSend = {}
+        if (data !== undefined) {
+            const filteredData = Object.values(data).filter(item => item !== null && item !== undefined)
+            // console.log("FilteredData: ", filteredData);
+            dataToSend = {filteredData}
+        }
+
+        // console.log(dataToSend)
+        axios.post(`${serverAddress}/api/${theme}/create`, dataToSend)
+            .then(res => {
+                console.log(`${theme} info successfully updated!`)
+            })
+            .catch(err => console.log(err))
+    }
+
+    const createCity = async (data) => {
+        delete data["id"];
+        axios.post(`${serverAddress}/api/city/create`, data)
+            .then(res => {
+                console.log("City info successfully created!")
+            })
+            .catch(err => console.log(err))
+    }
+
+    const updateCity = async (data) => {
+        delete data["id"];
+        axios.put(`${serverAddress}/api/city/update/${isActive}`, data)
+            .then(res => {
+                console.log("City info successfully updated!")
+            })
+            .catch(err => console.log(err))
+    }
+
+    const createSpecialist = async (data) => {
+        const formData = new FormData();
+        console.log("Specialist data: ", data)
+        Object.values(data).forEach(item => {
+            formData.append('specialists', JSON.stringify({
+                full_name: item.full_name,
+                experience: item.experience,
+                photo: item.photo[0].name
+            }));
+            formData.append('photos', item.photo[0]); // Добавляем файл
+        });
+        formData.append("currentCity", isActive);
+
+        axios.post(`${serverAddress}/api/specialist/create`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(res => {
+                console.log("Specialist successfully updated!")
+            })
+            .catch(err => console.log(err))
+    }
+
+    const onSave = async (data) => {
+        console.log("DATA: ", data)
+        if (isActive === "Общая информация") {
+            await createFile(data.files.about, "about");
+            await createFile(data.files.legal, "legal");
+            await createText(data.orgs, "authority");
+            return;
+        }
+
+        if (cities.some(item => item.name === isActive)) {
+            console.log("Update city!")
+            await updateCity(data.city);
+        } else {
+            await createCity(data.city);
+        }
+        await createFile(data.files.price, "price", isActive);
+        await createSpecialist(data.specialists);
+    }
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const aboutFiles = await getOnlyLinksName("about");
+            const legalFiles = await getOnlyLinksName("legal");
+            const priceFiles = await getOnlyLinksName("price", isActive);
+            const authorities = await getOnlyInfo("authority");
+            const specialists = await getSpecialistsInfo(isActive);
+            const city = await getCityInfo(isActive);
+
+            setValue("files", Object.assign([], {
+                about: aboutFiles,
+                legal: legalFiles,
+                price: priceFiles
+            }))
+
+            setValue("city", city.length ? city[0] : {
+                name: "",
+                coordinates: "",
+                address: "",
+                vk: "",
+                email: "",
+                phone: "",
+                bio_get: "",
+                bio_give: ""
+            })
+
+            setValue("specialists",
+                specialists.length ?
+                    Object.fromEntries(specialists.map(item => [item.id, item]))
+                    : {}
+            )
+            console.log(specialists)
+
+            setValue("orgs", Object.fromEntries(authorities.map(item => [item.id, item])))
+        }
+
+        fetchData().catch(err => console.log(err));
+        // console.log("ORGS: ", methods.getValues().orgs)
+    }, [isActive])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const allCities = await getCities();
+            setCities([{name: "Общая информация"}]);
+            for (let city of allCities) {
+                setCities(cities => [...cities, {
+                    name: city.name
+                }])
+            }
+        }
+
+        fetchData().catch(err => console.log(err))
+    }, [])
 
     return (
         <div className="admin__panel-wrap">
@@ -158,12 +337,12 @@ export default function AdminPanel() {
                             :
                             isActive === "Общая информация" ?
                                 <FormProvider {...methods}>
-                                    <AdminThemeContainerFiles theme="files" info={legalInfo} id={"legal"} key={1}/>
-                                    <AdminThemeContainerFiles theme="files" info={aboutInfo} id={"about"} key={2}/>
+                                    <AdminThemeContainerFiles theme="files" info={legalInfo} id={"legal"} key={51}/>
+                                    <AdminThemeContainerFiles theme="files" info={aboutInfo} id={"about"} key={52}/>
                                     <AdminThemeContainerPictures theme="mainPictures"
                                                                  info={{title: "Изображения главной страницы"}}
                                                                  methods={methods}/>
-                                    <AdminThemeContainerOrgs info={orgsInfo} methods={methods} key={3}/>
+                                    <AdminThemeContainerOrgs info={orgsInfo} methods={methods} key={53}/>
                                     <div onClick={handleSubmit(onSave)} className="admin__panel-save-button">
                                         Сохранить <img
                                         className="admin__panel-save-image"
@@ -175,20 +354,23 @@ export default function AdminPanel() {
                                     <div className="admin__panel-edit-city-info">
                                         <AdminThemeInput style={{fontSize: "40px",}}
                                                          info={{title: "Название города", placeholder: isActive}}
-                                                         theme="city"
-                                                         inputId={0}/>
+                                                         theme="name"
+                                                         inputId={0}
+                                                         key={101}/>
                                         <AdminThemeInput style={{fontSize: "40px",}}
                                                          info={{
                                                              title: "Адрес для карт",
                                                              placeholder: "Координаты xx.xxxxx; yy.yyyyyy"
                                                          }}
                                                          theme="coords"
-                                                         inputId={1}/>
+                                                         inputId={1}
+                                                         key={102}/>
                                     </div>
-                                    <AdminThemeContainerInputs info={contactInfo} key={101}/>
-                                    <AdminThemeContainerInputs info={workTimeInfo} key={102}/>
-                                    <AdminThemeContainerFiles theme="prices" info={priceInfo} id={"price"}/>
-                                    <AdminThemeContainerSpecialists info={{title: "Специалисты"}} methods={methods}/>
+                                    <AdminThemeContainerInputs info={contactInfo} theme="contacts" key={103}/>
+                                    <AdminThemeContainerInputs info={workTimeInfo} theme="workTime" key={104}/>
+                                    <AdminThemeContainerFiles theme="files" info={priceInfo} id={"price"} key={105}/>
+                                    <AdminThemeContainerSpecialists info={{title: "Специалисты"}} city={isActive} methods={methods}
+                                                                    key={106}/>
                                     <div onClick={handleSubmit(onSave)} className="admin__panel-save-button">
                                         Сохранить <img
                                         className="admin__panel-save-image"
@@ -200,7 +382,5 @@ export default function AdminPanel() {
                 </div>
             </Container>
         </div>
-
-
     )
 }

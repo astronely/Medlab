@@ -8,6 +8,9 @@ import md from '/src/assets/content/main/img/child-md.png';
 import sm from '/src/assets/content/main/img/child-sm.png';
 
 export default function HomeInfo() {
+
+    // TODO: pictures from db
+
     return(
         <>
             <Container>
