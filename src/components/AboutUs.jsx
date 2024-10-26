@@ -6,13 +6,16 @@ import "./styles/aboutMedia.scss"
 import "./styles/about.scss"
 import axios from "axios";
 import {useEffect, useState} from "react";
+import {getAddress, getInfo, getLinks} from "../utils/getInfo.js";
+import {useApp} from "../hooks/useApp.js";
 
 export default function AboutUs() {
     const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
     const serverAssetsFolder = `${serverAddress}/assets/aboutUs`;
 
+    const {currentCity} = useApp();
     const [links, setLinks] = useState([]);
-    const [addresses, setAddresses] = useState([]);
+    const [authorities, setAuthorities] = useState([]);
     const [clinicAddress, setClinicAddress] = useState("______________________");
 
     const aboutUsInfo = {
@@ -30,33 +33,9 @@ export default function AboutUs() {
             " так и подготовки к медицинским исследованиям"
     }
 
-    const getLinks = async () => {
-        setLinks([]);
-        axios.get(`${serverAddress}/api/about/get`)
-            .then(res => {
-                console.log(res.data)
-                for (let link of res.data) {
-                    setLinks(links => [...links,
-                        {
-                            name: link.file_name,
-                            link: `${serverAssetsFolder}/${link.file_name}`
-                        }
-                    ])
-                }
-            })
-    }
-
-    const addressesInfo = {
+    const authoritiesInfo = {
         title: "Адреса и контакты контроллирующих органов",
-        addresses: [
-            {
-                name: "ТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТатаТата",
-                address: "Туту",
-                telephone: "+7 (999) 999 88 77"
-            }, // TODO: do width limits for text
-            {name: "Тата", address: "Туту", telephone: "+7 (999) 999 88 77"},
-            {name: "Тата", address: "Туту", telephone: "+7 (999) 999 88 77"}
-        ]
+        authorities: authorities
     }
 
     const contactInfo = {
@@ -80,9 +59,12 @@ e-mail: medlab74@mail.ru
     }
 
     useEffect(() => {
-        setLinks([])
-        getLinks().catch(err => console.log(err))
-    }, [])
+        setLinks([]);
+        setAuthorities([]);
+        getLinks(links, setLinks, "about", serverAssetsFolder).catch(err => console.log(err));
+        getInfo(setAuthorities, "authority").catch(err => console.log(err))
+        getAddress(setClinicAddress, currentCity.replace("г. ", "")).catch(err => console.log(err));
+    }, [currentCity])
 
     return (
         <Container>
@@ -94,8 +76,8 @@ e-mail: medlab74@mail.ru
                         <BoxDividerLink links={links}/>
                     </div>
                     <div className="about__links about__main-content-item">
-                        <BoxDividerV isDivider={false} isText={false} info={addressesInfo}/>
-                        <BoxDiamondLink isAddresses={true} info={addressesInfo.addresses}/>
+                        <BoxDividerV isDivider={false} isText={false} info={authoritiesInfo}/>
+                        <BoxDiamondLink isAddresses={true} info={authoritiesInfo.authorities}/>
                     </div>
                     <div className="about__main-content-item">
                         <BoxDividerV style={{color: "var(--secondary-black)", whiteSpace: "pre-wrap", fontSize: "1rem"}}

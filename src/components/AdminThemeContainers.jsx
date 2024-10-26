@@ -1,7 +1,10 @@
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Controller, useFormContext} from "react-hook-form";
 import AddImage from "/src/assets/admin/add.svg"
 import RemoveImage from "/src/assets/admin/remove.svg"
+import Reload from "/src/assets/about-us/Content/hexagon-fill.svg"
+
+import {getOnlyInfo, getSpecialistsInfo} from "../utils/getInfo.js";
 
 export function AdminThemeContainerFiles({
                                              info,
@@ -9,7 +12,7 @@ export function AdminThemeContainerFiles({
                                              id,
                                              inputId,
                                              keyForFilePosition = 0,
-                                             classNameInput = null,
+                                             classNameInput = "",
                                              styleContainer = {}
                                          }) {
     const {control} = useFormContext();
@@ -65,12 +68,16 @@ export function AdminThemeContainerFiles({
                                 onClick={handleClick}
                                 onDragOver={handleDragOver}
                                 onDrop={(e) => handleDrop(e, onChange)}
-                                className={classNameInput ? classNameInput : "admin__theme-input-file"}>
+                                className={classNameInput !== "" ? classNameInput : "admin__theme-input-file"}>
 
                                 {value && value.length !== 0 ? (
-                                    value.map((file, index) => (
-                                        <div key={inputId + index} style={{padding: '10px 0'}}>{file.name}</div>
-                                    ))
+                                    typeof(value) === "string" ?
+                                        <div key={inputId} style={{padding: '10px 0'}}>{value}</div>
+                                        :
+                                        value.map((file, index) => (
+                                            // console.log(file)
+                                            <div key={inputId + index} style={{padding: '10px 0'}}>{file.name}</div>
+                                        ))
                                 ) : (
                                     info.placeholder
                                 )}
@@ -97,19 +104,22 @@ export function AdminThemeContainerOrgs({info, methods}) {
     const onClickAdd = () => {
         setOrgBoxes(orgBoxes => [...orgBoxes, {
             id: counter,
-            name: "",
-            address: "",
-            telephone: "",
-            email: ""
         }])
         setCounter(prevState => prevState + 1)
     }
 
     const onClickDelete = (id) => {
-        // console.log("delete id:", id)
         methods.unregister(`orgs.${id}`)
         setOrgBoxes(orgBoxes.filter((item) => item.id !== id));
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const boxes = await getOnlyInfo("authority");
+            setOrgBoxes(boxes);
+        }
+        fetchData().catch(err => console.log(err))
+    }, [])
 
     return (
         <div className="admin__theme-orgs-container">
@@ -127,10 +137,10 @@ function AdminThemeOrgsInputs({info, onClickDelete}) {
     const id = info.id;
 
     const inputsInfo = [
-        {title: "Название", placeholder: id},
-        {title: "Адрес", placeholder: "Адрес"},
-        {title: "Телефон", placeholder: "Телефон"},
-        {title: "Почта", placeholder: "Почта"}
+        {title: "Название", placeholder: "Название", fieldName: "name"},
+        {title: "Адрес", placeholder: "Адрес", fieldName: "address"},
+        {title: "Телефон", placeholder: "Телефон", fieldName: "phone"},
+        {title: "Почта", placeholder: "Почта", fieldName: "email"}
     ]
 
     return (
@@ -148,7 +158,7 @@ function AdminThemeOrgsInputs({info, onClickDelete}) {
     )
 }
 
-export function AdminThemeContainerSpecialists({info, methods}) {
+export function AdminThemeContainerSpecialists({info, city, methods}) {
     const [specialists, setSpecialists] = useState([]);
     const [counter, setCounter] = useState(0);
     const startIndex = 8;
@@ -156,17 +166,24 @@ export function AdminThemeContainerSpecialists({info, methods}) {
     const onClickAdd = () => {
         setSpecialists(specialists => [...specialists, {
             id: counter,
-            name: specialists.length,
-            experience: ["job1, 2 years", "job2, 3years"]
         }]);
         setCounter(prevState => prevState + 1);
     }
 
     const onClickDelete = (id) => {
-        // console.log("ID TO DELETE: ", id)
         methods.unregister(`specialists.${id}`)
         setSpecialists(specialists.filter((item) => item.id !== id))
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const specialistsList = await getSpecialistsInfo(city);
+            setSpecialists(specialistsList);
+        }
+        setTimeout(() => {
+            fetchData().catch(err => console.log(err))
+        }, 500)
+    }, [city])
 
     return (
         <div className="admin__theme-specialists-container">
@@ -185,10 +202,11 @@ export function AdminThemeContainerSpecialists({info, methods}) {
 
 function AdminThemeSpecialist({info, onClickDelete}) {
     const id = info.id;
+
     const inputsInfo = [
-        {title: "ФИО", placeholder: "Фамилия"},
-        {text: "Фотография", placeholder: "Прикрепите файлы сюда"},
-        {title: "Специальность и стаж", placeholder: "Список через запятую"},
+        {title: "ФИО", placeholder: "Фамилия", fieldName: "full_name"},
+        {text: "Фотография", placeholder: "Прикрепите файлы сюда", fieldName: "photo"},
+        {title: "Специальность и стаж", placeholder: "Список через запятую", fieldName: "experience"},
     ]
 
     return (
@@ -202,7 +220,7 @@ function AdminThemeSpecialist({info, onClickDelete}) {
                                                         classNameInput={"admin__theme-specialists-input-file"}
                                                         styleContainer={{gap: "0"}}/>
                     : <AdminThemeInput info={item}
-                                       theme="specialists"
+                                       theme={"specialists"}
                                        id={id}
                                        inputId={id * 3 + index}
                                        key={id * 3 + index}
@@ -280,9 +298,8 @@ function AdminThemePicture({info, onClickDelete}) {
     )
 }
 
-export function AdminThemeContainerInputs({info}) {
+export function AdminThemeContainerInputs({info, theme}) {
 
-    const theme = info.title === "Контактная информация" ? "contacts" : "workTime";
     const startIndex = info.title === "Контактная информация" ? 2 : 6;
     return (
         <div style={{display: "flex", flexDirection: "column", gap: "40px"}}>
@@ -302,26 +319,28 @@ export function AdminThemeContainerInputs({info}) {
 export function AdminThemeInput({info, theme, id, inputId, style = {}, inputStyle = {}}) {
     const {control} = useFormContext();
 
-    // TODO: Сделать нормальные name за место info.title
     let name = "";
+    const dataField = info.fieldName ? info.fieldName : (info.title).toLowerCase();
+
     switch (theme) {
         case "orgs":
-            name = `${theme}[${id}].${(info.title).toLowerCase()}`;
+            name = `${theme}[${id}].${dataField}`;
             break;
-        case "city":
-            name = `${theme}.name`
+        case "name":
+            name = `city.name`
             break;
         case "contacts":
-            name = `${theme}.${(info.title).toLowerCase()}`
+            name = `city.${dataField}`
             break;
         case "workTime":
-            name = `${theme}.${(info.title).toLowerCase()}`
+            name = `city.${dataField}`
             break;
         case "specialists":
-            name = `${theme}[${id}].${(info.title).toLowerCase()}`
+            name = `${theme}[${id}].${dataField}`
             break;
         case "coords":
-            name = `city.coords`
+            name = `city.coordinates`
+            break;
     }
 
     return (
@@ -336,7 +355,7 @@ export function AdminThemeInput({info, theme, id, inputId, style = {}, inputStyl
                            key={inputId}
                            type="text"
                            className="admin__theme-input-textedit"
-                           placeholder={info.placeholder}/>
+                           placeholder={info.title}/>
                 )}>
 
             </Controller>
