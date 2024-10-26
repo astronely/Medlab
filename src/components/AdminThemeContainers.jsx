@@ -2,7 +2,6 @@ import {useEffect, useRef, useState} from "react";
 import {Controller, useFormContext} from "react-hook-form";
 import AddImage from "/src/assets/admin/add.svg"
 import RemoveImage from "/src/assets/admin/remove.svg"
-import Reload from "/src/assets/about-us/Content/hexagon-fill.svg"
 
 import {getOnlyInfo, getSpecialistsInfo} from "../utils/getInfo.js";
 
