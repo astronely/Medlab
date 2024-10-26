@@ -4,7 +4,6 @@ import BoxDividerLink from "./BoxDividerLink.jsx";
 import BoxDiamondLink from "./BoxDiamondLink.jsx";
 import "./styles/aboutMedia.scss"
 import "./styles/about.scss"
-import axios from "axios";
 import {useEffect, useState} from "react";
 import {getAddress, getInfo, getLinks} from "../utils/getInfo.js";
 import {useApp} from "../hooks/useApp.js";

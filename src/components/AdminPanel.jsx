@@ -139,7 +139,7 @@ export default function AdminPanel() {
         }
     });
 
-    const {handleSubmit, setValue, reset} = methods;
+    const {handleSubmit, setValue} = methods;
 
     const createFile = async (files, theme, city = "") => {
         const formData = new FormData();
@@ -219,10 +219,20 @@ export default function AdminPanel() {
             }
         })
             .then(res => {
-                console.log("Specialist successfully updated!")
+                console.log("Specialist successfully created!")
             })
             .catch(err => console.log(err))
     }
+
+    const updateSpecialist = async (data) => {
+        axios.put(`${serverAddress}/api/specialist/update/${isActive}`, data)
+            .then(res => {
+                console.log("Specialist successfully updated!")
+                }
+            )
+            .catch(err => console.log(err))
+    }
+
 
     const onSave = async (data) => {
         console.log("DATA: ", data)
@@ -233,12 +243,23 @@ export default function AdminPanel() {
             return;
         }
 
-        if (cities.some(item => item.name === isActive)) {
+        if (cities.some(item => item.name === data.city.name)) {
             console.log("Update city!")
             await updateCity(data.city);
         } else {
             await createCity(data.city);
         }
+
+        console.log("SPECIALISTS DATA: ", data.specialists)
+        // TODO: rework it to single
+        // for (let item in data.specialists) {
+        //     const currentSpecialist = data.specialists.item;
+        //     if (typeof(currentSpecialist.photo) === "string") {
+        //         await updateSpecialist(currentSpecialist);
+        //         continue;
+        //     }
+        //     await createSpecialist(currentSpecialist);
+        // }
         await createFile(data.files.price, "price", isActive);
         await createSpecialist(data.specialists);
     }
