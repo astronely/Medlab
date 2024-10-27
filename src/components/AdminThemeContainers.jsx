@@ -117,7 +117,9 @@ export function AdminThemeContainerOrgs({info, methods}) {
             const boxes = await getOnlyInfo("authority");
             setOrgBoxes(boxes);
         }
-        fetchData().catch(err => console.log(err))
+        setTimeout(() => {
+            fetchData().catch(err => console.log(err))
+        }, 500)
     }, [])
 
     return (

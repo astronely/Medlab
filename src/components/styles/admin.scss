@@ -373,11 +373,12 @@
         font-size: 1.5rem;
         color: var(--secondary-black);
         line-height: normal;
+        word-break: break-all;
 
         background-color: var(--modal-background-color);
         border: none;
         padding: 10px;
-        width: auto;
+        width: 360px;
       }
     }
   }

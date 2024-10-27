@@ -26,7 +26,7 @@ export const getOnlyLinksName = async (theme, city = "") => {
     await axios.get(url)
         .then(res => {
             for (let file of res.data) {
-                resToSend.push(new File([""], file.file_name));
+                resToSend.push({name: file.file_name});
             }
             // console.log(`DATA for ADMIN for ${theme}: `, resToSend)
             return resToSend;
@@ -106,10 +106,14 @@ export const getSpecialistsCards = async (specialists, setSpecialists, city) => 
     await axios.get(`${serverAddress}/api/specialist/get/${city}`)
         .then(res => {
             for (let specialist of res.data) {
+                const photoPath = specialist.photo === "man-placeholder.svg" ?
+                    `${serverAddress}/assets/${specialist.photo}`
+                    : `${serverAddress}/assets/${city}/specialist/${specialist.photo}`;
+
                 setSpecialists(specialists => [...specialists, {
                     full_name: specialist.full_name,
                     experience: specialist.experience,
-                    photo: `${serverAddress}/assets/${city}/specialist/${specialist.photo}`
+                    photo: photoPath
                 }])
             }
         })

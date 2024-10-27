@@ -7,9 +7,9 @@ import {getLinks} from "../utils/getInfo.js";
 import {useApp} from "../hooks/useApp.js";
 
 export default function Prices() {
-    const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
-    const serverAssetsFolder = `${serverAddress}/assets/prices`;
     const {currentCity} = useApp();
+    const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
+    const serverAssetsFolder = `${serverAddress}/assets/${currentCity.replace("г. ", "")}/prices`;
 
     const [prices, setPrices] = useState([]);
 
@@ -23,6 +23,8 @@ export default function Prices() {
     useEffect(() => {
         setPrices([]);
         console.log(currentCity)
+        console.log(serverAddress)
+        console.log(serverAssetsFolder)
         getLinks(prices, setPrices, "price", serverAssetsFolder, currentCity.replace("г. ", ""))
             .catch(err => console.log(err))
     }, [currentCity])

@@ -34,6 +34,9 @@
 
     &-image {
       max-height: 360px;
+      min-height: 360px;
+      max-width: 360px;
+
     }
 
     &-divider {
