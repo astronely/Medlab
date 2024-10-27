@@ -7,18 +7,34 @@ import Phone from "/src/assets/contacts/footer/phone.svg"
 import Envelope from "/src/assets/contacts/footer/envelope.svg"
 import Copyright from "/src/assets/contacts/footer/copyright.svg"
 import {Container} from "react-bootstrap";
+import {useEffect, useState} from "react";
+import {getCityInfo} from "../utils/getInfo.js";
+import {useApp} from "../hooks/useApp.js";
 
 export default function Footer() {
+    const [cityData, setCityData] = useState({});
+    const {currentCity} = useApp();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const fetchedData = await getCityInfo(currentCity);
+            console.log("CITY DATA: ", fetchedData)
+            setCityData(fetchedData[0]);
+            // console.log("CITY DATA: ", cityData)
+        }
+        fetchData().catch(err => console.log(err))
+    }, [currentCity])
+
     return (
         <Container>
             <div className="footer">
                 <div className="footer__top">
                     <Logo />
                     <div className="footer__links">
-                        <SocialLink picture={Whatsapp} text="Whatsapp"/>
-                        <SocialLink picture={VK} text="VK"/>
-                        <SocialLink picture={Phone} text="+7 (999) 999-99-99"/>
-                        <SocialLink picture={Envelope} text="testbox@mail.com"/>
+                        <SocialLink picture={Whatsapp} text={`${cityData.phone}`} type={"whatsapp"}/>
+                        <SocialLink picture={VK} text={`${cityData.vk}`} type={"vk"}/>
+                        <SocialLink picture={Phone} text={`${cityData.phone}`} type={"phone"}/>
+                        <SocialLink picture={Envelope} text={`${cityData.email}`} type={"email"}/>
                     </div>
                 </div>
                 <div className="footer__bottom">

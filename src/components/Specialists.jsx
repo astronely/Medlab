@@ -4,7 +4,7 @@ import SpecialistCard from "./SpecialistCard.jsx";
 import "./styles/specialists.scss"
 import "./styles/specialistsMedia.scss"
 import {useEffect, useState} from "react";
-import {getLinks, getSpecialistsCards, getSpecialistsInfo} from "../utils/getInfo.js";
+import {getSpecialistsCards} from "../utils/getInfo.js";
 import {useApp} from "../hooks/useApp.js";
 
 export default function Specialists() {
@@ -19,48 +19,6 @@ export default function Specialists() {
             " и внимательное отношение к каждому пациенту. Выберите нужного специалиста" +
             " и узнайте больше о его профессиональных достижениях."
     }
-
-    // const specialists = [
-    //     {
-    //         sex: "man", // TODO: change to gender
-    //         experience: [
-    //             "job1, 5 years",
-    //             "job2, 2.5 years",
-    //         ]
-    //     },
-    //     {
-    //         sex: "woman",
-    //         experience: [
-    //             "job1, 5 years",
-    //         ]
-    //     },
-    //     {
-    //         sex: "woman",
-    //         experience: [
-    //             "job1, 5 years",
-    //             "job2, 2.5 years",
-    //             "job3, 2.5 years",
-    //         ]
-    //     },
-    //     {
-    //         sex: "man",
-    //         experience: [
-    //             "job1, 5 years",
-    //             "job2, 2.5 years",
-    //             "job3, 2.5 years",
-    //             "job4, 4 years",
-    //         ]
-    //     },
-    //     {
-    //         sex: "man",
-    //         experience: [
-    //             "job1, 5 years",
-    //             "job2, 2.5 years",
-    //             "job3, 2.5 years",
-    //         ]
-    //     },
-    //
-    // ]
 
     useEffect(() => {
         setSpecialists([]);

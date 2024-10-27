@@ -129,13 +129,7 @@ export default function AdminPanel() {
                 bio_give: undefined
             },
             specialists: [],
-            mainPictures: {
-                xxl: undefined,
-                xl: undefined,
-                lg: undefined,
-                md: undefined,
-                sm: undefined
-            }
+            mainPictures: []
         }
     });
 
@@ -158,7 +152,7 @@ export default function AdminPanel() {
             formData.append("currentCity", city);
         }
         axios.post(`${serverAddress}/api/${theme}/create`, formData)
-            .then(res => {
+            .then(() => {
                 console.log(`${theme} info successfully updated!`);
             })
             .catch(err => console.log(err));
@@ -175,7 +169,7 @@ export default function AdminPanel() {
 
         // console.log(dataToSend)
         axios.post(`${serverAddress}/api/${theme}/create`, dataToSend)
-            .then(res => {
+            .then(() => {
                 console.log(`${theme} info successfully updated!`)
             })
             .catch(err => console.log(err))
@@ -184,7 +178,7 @@ export default function AdminPanel() {
     const createCity = async (data) => {
         delete data["id"];
         axios.post(`${serverAddress}/api/city/create`, data)
-            .then(res => {
+            .then(() => {
                 console.log("City info successfully created!")
             })
             .catch(err => console.log(err))
@@ -193,36 +187,70 @@ export default function AdminPanel() {
     const updateCity = async (data) => {
         delete data["id"];
         axios.put(`${serverAddress}/api/city/update/${isActive}`, data)
-            .then(res => {
+            .then(() => {
                 console.log("City info successfully updated!")
             })
             .catch(err => console.log(err))
     }
 
-    const createSpecialist = async (data) => {
+    const createSpecialist = async (data, city) => {
         const formData = new FormData();
         console.log("Specialist data: ", data)
+        if (data === undefined) {
+            formData.append("currentCity", city);
+            axios.post(`${serverAddress}/api/specialist/create`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(() => {
+                    console.log("Specialist successfully updated!")
+                })
+                .catch(err => console.log(err))
+            return;
+        }
         Object.values(data).forEach(item => {
             formData.append('specialists', JSON.stringify({
                 full_name: item.full_name,
                 experience: item.experience,
-                photo: typeof(item.photo) === "string" ? item.photo
+                photo: typeof (item.photo) === "string" ? item.photo
                     : item.photo !== undefined ? item.photo[0].name : ""
             }));
-            if (typeof(item.photo) !== "string" && item.photo !== undefined)
+            if (typeof (item.photo) !== "string" && item.photo !== undefined)
                 formData.append('photos', item.photo[0]); // Добавляем файл
         });
-        formData.append("currentCity", isActive);
+        formData.append("currentCity", city);
 
         axios.post(`${serverAddress}/api/specialist/create`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
-            .then(res => {
-                console.log("Specialist successfully created!")
+            .then(() => {
+                console.log("Specialist successfully updated!")
             })
             .catch(err => console.log(err))
+    }
+
+    const createCommonPictures = async (data) => {
+        const formData = new FormData();
+        if (data === undefined || data.length === 0) {
+            return;
+        }
+
+        for (let file in data) {
+            const fileToAdd = data[file][0];
+            console.log(fileToAdd)
+            formData.append(`commonPictures`, fileToAdd);
+        }
+
+        console.log(data)
+
+        axios.post(`${serverAddress}/api/commonPicture/create`, formData)
+            .then(res => {
+                console.log(`CommonPicture info successfully updated! \n ${res.data}`);
+            })
+            .catch(err => console.log(err));
     }
 
     const onSave = async (data) => {
@@ -232,6 +260,7 @@ export default function AdminPanel() {
             await createFile(data.files.about, "about");
             await createFile(data.files.legal, "legal");
             await createText(data.orgs, "authority");
+            await createCommonPictures(data.mainPictures[0])
             return;
         }
 
@@ -244,8 +273,8 @@ export default function AdminPanel() {
 
         console.log("SPECIALISTS DATA: ", data.specialists)
 
-        await createFile(data.files.price, "price", isActive);
-        await createSpecialist(data.specialists);
+        await createFile(data.files.price, "price", data.city.name);
+        await createSpecialist(data.specialists, data.city.name);
     }
 
 
@@ -346,8 +375,7 @@ export default function AdminPanel() {
                                     <AdminThemeContainerFiles theme="files" info={legalInfo} id={"legal"} key={51}/>
                                     <AdminThemeContainerFiles theme="files" info={aboutInfo} id={"about"} key={52}/>
                                     <AdminThemeContainerPictures theme="mainPictures"
-                                                                 info={{title: "Изображения главной страницы"}}
-                                                                 methods={methods}/>
+                                                                 info={{title: "Изображения главной страницы"}}/>
                                     <AdminThemeContainerOrgs info={orgsInfo} methods={methods} key={53}/>
                                     <div onClick={handleSubmit(onSave)} className="admin__panel-save-button">
                                         Сохранить <img
@@ -375,7 +403,8 @@ export default function AdminPanel() {
                                     <AdminThemeContainerInputs info={contactInfo} theme="contacts" key={103}/>
                                     <AdminThemeContainerInputs info={workTimeInfo} theme="workTime" key={104}/>
                                     <AdminThemeContainerFiles theme="files" info={priceInfo} id={"price"} key={105}/>
-                                    <AdminThemeContainerSpecialists info={{title: "Специалисты"}} city={isActive} methods={methods}
+                                    <AdminThemeContainerSpecialists info={{title: "Специалисты"}} city={isActive}
+                                                                    methods={methods}
                                                                     key={106}/>
                                     <div onClick={handleSubmit(onSave)} className="admin__panel-save-button">
                                         Сохранить <img

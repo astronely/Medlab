@@ -82,7 +82,7 @@ export const getCities = async () => {
 export const getAddress = async (setAddress, city) => {
     await axios.get(`${serverAddress}/api/city/get/${city}`)
         .then(res => {
-            console.log(res)
+            // console.log(res)
             setAddress(res.data[0].address)
         })
         .catch(err => console.log(err))
@@ -116,6 +116,18 @@ export const getSpecialistsCards = async (specialists, setSpecialists, city) => 
                     photo: photoPath
                 }])
             }
+        })
+        .catch(err => console.log(err))
+    return resToSend;
+}
+
+export const getPictures = async () => {
+    let resToSend = [];
+    await axios.get(`${serverAddress}/api/commonPicture/get`)
+        .then(res => {
+            // console.log("GotPictures: ", res.data)
+            resToSend = res.data;
+            return resToSend;
         })
         .catch(err => console.log(err))
     return resToSend;

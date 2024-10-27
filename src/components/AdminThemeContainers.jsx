@@ -10,7 +10,6 @@ export function AdminThemeContainerFiles({
                                              theme,
                                              id,
                                              inputId,
-                                             keyForFilePosition = 0,
                                              classNameInput = "",
                                              styleContainer = {}
                                          }) {
@@ -48,7 +47,7 @@ export function AdminThemeContainerFiles({
             name = `${theme}[${id}].photo`
             break;
         case "mainPictures":
-            name = `${theme}[${id}].${keyForFilePosition}`
+            name = `${theme}[${id}].${info.fieldName}`
             break;
     }
 
@@ -234,33 +233,31 @@ function AdminThemeSpecialist({info, onClickDelete}) {
     )
 }
 
-export function AdminThemeContainerPictures({info, methods}) {
-    const [pictures, setPictures] = useState([]);
-    const [counter, setCounter] = useState(0);
+export function AdminThemeContainerPictures({info}) {
+    const [pictures, setPictures] = useState([{id: 0}]);
+    // const [counter, setCounter] = useState(0);
     const startIndex = 2;
 
-    const onClickAdd = () => {
-        setPictures(pictures => [...pictures, {
-            id: counter,
-            name: pictures.length,
-        }]);
-        setCounter(prevState => prevState + 1);
-    }
-
-    const onClickDelete = (id) => {
-        console.log("ID: ", id)
-        methods.unregister(`mainPictures.${id}`)
-        setPictures(pictures.filter((item) => item.id !== id))
-    }
+    // const onClickAdd = () => {
+    //     setPictures(pictures => [...pictures, {
+    //         id: counter,
+    //         name: pictures.length,
+    //     }]);
+    //     setCounter(prevState => prevState + 1);
+    // }
+    //
+    // const onClickDelete = (id) => {
+    //     console.log("ID: ", id)
+    //     methods.unregister(`mainPictures.${id}`)
+    //     setPictures(pictures.filter((item) => item.id !== id))
+    // }
 
     return (
         <div className="admin__theme-specialists-container">
-            <div className="admin__theme-title">{info.title} <img onClick={onClickAdd} src={AddImage}
-                                                                  alt="add box"/></div>
+            <div className="admin__theme-title">{info.title}</div>
             <div className="admin__theme-specialists-list">
                 {pictures.map((picture, index) => (
                     <AdminThemePicture info={picture}
-                                       onClickDelete={onClickDelete}
                                        key={index + startIndex}/>
                 ))}
             </div>
@@ -268,16 +265,16 @@ export function AdminThemeContainerPictures({info, methods}) {
     )
 }
 
-function AdminThemePicture({info, onClickDelete}) {
+function AdminThemePicture({info}) {
     const id = info.id;
 
     const picturesInputInfo = [
-        {text: "Формат xxl", placeholder: "Прикрепите изображение"},
-        {text: "Формат xl", placeholder: "Прикрепите изображение"},
-        {text: "Формат lg", placeholder: "Прикрепите изображение"},
-        {text: "Формат md", placeholder: "Прикрепите изображение"},
-        {text: "Формат sm", placeholder: "Прикрепите изображение"},
-        {text: "Формат xs", placeholder: "Прикрепите изображение"},
+        {text: "Формат xxl", placeholder: "Прикрепите изображение", fieldName: "xxl"},
+        {text: "Формат xl", placeholder: "Прикрепите изображение", fieldName: "xl"},
+        {text: "Формат lg", placeholder: "Прикрепите изображение", fieldName: "lg"},
+        {text: "Формат md", placeholder: "Прикрепите изображение", fieldName: "md"},
+        {text: "Формат sm", placeholder: "Прикрепите изображение", fieldName: "sm"},
+        {text: "Формат xs", placeholder: "Прикрепите изображение", fieldName: "xs"},
     ]
 
     return (
@@ -292,9 +289,9 @@ function AdminThemePicture({info, onClickDelete}) {
                                           classNameInput={"admin__theme-specialists-input-file"}
                                           styleContainer={{gap: "0"}}/>
             ))}
-            <img onClick={() => onClickDelete(info.id)}
-                 src={RemoveImage}
-                 alt="remove box"/>
+            {/*<img onClick={() => onClickDelete(info.id)}*/}
+            {/*     src={RemoveImage}*/}
+            {/*     alt="remove box"/>*/}
         </div>
     )
 }
