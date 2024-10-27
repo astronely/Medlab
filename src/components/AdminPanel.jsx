@@ -152,7 +152,7 @@ export default function AdminPanel() {
             formData.append("currentCity", city);
         }
         axios.post(`${serverAddress}/api/${theme}/create`, formData)
-            .then(res => {
+            .then(() => {
                 console.log(`${theme} info successfully updated!`);
             })
             .catch(err => console.log(err));
@@ -169,7 +169,7 @@ export default function AdminPanel() {
 
         // console.log(dataToSend)
         axios.post(`${serverAddress}/api/${theme}/create`, dataToSend)
-            .then(res => {
+            .then(() => {
                 console.log(`${theme} info successfully updated!`)
             })
             .catch(err => console.log(err))
@@ -178,7 +178,7 @@ export default function AdminPanel() {
     const createCity = async (data) => {
         delete data["id"];
         axios.post(`${serverAddress}/api/city/create`, data)
-            .then(res => {
+            .then(() => {
                 console.log("City info successfully created!")
             })
             .catch(err => console.log(err))
@@ -187,7 +187,7 @@ export default function AdminPanel() {
     const updateCity = async (data) => {
         delete data["id"];
         axios.put(`${serverAddress}/api/city/update/${isActive}`, data)
-            .then(res => {
+            .then(() => {
                 console.log("City info successfully updated!")
             })
             .catch(err => console.log(err))
@@ -203,7 +203,7 @@ export default function AdminPanel() {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-                .then(res => {
+                .then(() => {
                     console.log("Specialist successfully updated!")
                 })
                 .catch(err => console.log(err))
@@ -226,7 +226,7 @@ export default function AdminPanel() {
                 'Content-Type': 'multipart/form-data'
             }
         })
-            .then(res => {
+            .then(() => {
                 console.log("Specialist successfully updated!")
             })
             .catch(err => console.log(err))
