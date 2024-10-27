@@ -129,13 +129,7 @@ export default function AdminPanel() {
                 bio_give: undefined
             },
             specialists: [],
-            mainPictures: {
-                xxl: undefined,
-                xl: undefined,
-                lg: undefined,
-                md: undefined,
-                sm: undefined
-            }
+            mainPictures: []
         }
     });
 
@@ -199,9 +193,22 @@ export default function AdminPanel() {
             .catch(err => console.log(err))
     }
 
-    const createSpecialist = async (data) => {
+    const createSpecialist = async (data, city) => {
         const formData = new FormData();
         console.log("Specialist data: ", data)
+        if (data === undefined) {
+            formData.append("currentCity", city);
+            axios.post(`${serverAddress}/api/specialist/create`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(res => {
+                    console.log("Specialist successfully updated!")
+                })
+                .catch(err => console.log(err))
+            return;
+        }
         Object.values(data).forEach(item => {
             formData.append('specialists', JSON.stringify({
                 full_name: item.full_name,
@@ -212,7 +219,7 @@ export default function AdminPanel() {
             if (typeof(item.photo) !== "string" && item.photo !== undefined)
                 formData.append('photos', item.photo[0]); // Добавляем файл
         });
-        formData.append("currentCity", isActive);
+        formData.append("currentCity", city);
 
         axios.post(`${serverAddress}/api/specialist/create`, formData, {
             headers: {
@@ -220,9 +227,30 @@ export default function AdminPanel() {
             }
         })
             .then(res => {
-                console.log("Specialist successfully created!")
+                console.log("Specialist successfully updated!")
             })
             .catch(err => console.log(err))
+    }
+
+    const createCommonPictures = async (data) => {
+        const formData = new FormData();
+        if (data === undefined || data.length === 0) {
+            return;
+        }
+
+        for (let file in data) {
+            const fileToAdd = data[file][0];
+            console.log(fileToAdd)
+            formData.append(`commonPictures`, fileToAdd);
+        }
+
+        console.log(data)
+
+        axios.post(`${serverAddress}/api/commonPicture/create`, formData)
+            .then(res => {
+                console.log(`CommonPicture info successfully updated! \n ${res.data}`);
+            })
+            .catch(err => console.log(err));
     }
 
     const onSave = async (data) => {
@@ -232,6 +260,7 @@ export default function AdminPanel() {
             await createFile(data.files.about, "about");
             await createFile(data.files.legal, "legal");
             await createText(data.orgs, "authority");
+            await createCommonPictures(data.mainPictures[0])
             return;
         }
 
@@ -244,8 +273,8 @@ export default function AdminPanel() {
 
         console.log("SPECIALISTS DATA: ", data.specialists)
 
-        await createFile(data.files.price, "price", isActive);
-        await createSpecialist(data.specialists);
+        await createFile(data.files.price, "price", data.city.name);
+        await createSpecialist(data.specialists, data.city.name);
     }
 
 

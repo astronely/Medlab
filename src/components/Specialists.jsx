@@ -20,48 +20,6 @@ export default function Specialists() {
             " и узнайте больше о его профессиональных достижениях."
     }
 
-    // const specialists = [
-    //     {
-    //         sex: "man", // TODO: change to gender
-    //         experience: [
-    //             "job1, 5 years",
-    //             "job2, 2.5 years",
-    //         ]
-    //     },
-    //     {
-    //         sex: "woman",
-    //         experience: [
-    //             "job1, 5 years",
-    //         ]
-    //     },
-    //     {
-    //         sex: "woman",
-    //         experience: [
-    //             "job1, 5 years",
-    //             "job2, 2.5 years",
-    //             "job3, 2.5 years",
-    //         ]
-    //     },
-    //     {
-    //         sex: "man",
-    //         experience: [
-    //             "job1, 5 years",
-    //             "job2, 2.5 years",
-    //             "job3, 2.5 years",
-    //             "job4, 4 years",
-    //         ]
-    //     },
-    //     {
-    //         sex: "man",
-    //         experience: [
-    //             "job1, 5 years",
-    //             "job2, 2.5 years",
-    //             "job3, 2.5 years",
-    //         ]
-    //     },
-    //
-    // ]
-
     useEffect(() => {
         setSpecialists([]);
         const fetchSpecialists = async () => {

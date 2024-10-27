@@ -106,7 +106,7 @@ export default function Contacts() {
                                  modules={
                                      ["control.ZoomControl"]
                                  }>
-                                <Placemark defaultGeometry={[54.984868, 57.688882]}/>
+                                <Placemark defaultGeometry={[coordinates[0], coordinates[1]]}/>
                             </Map>
                         </YMaps>
                     </div>
