@@ -4,7 +4,7 @@ import SpecialistCard from "./SpecialistCard.jsx";
 import "./styles/specialists.scss"
 import "./styles/specialistsMedia.scss"
 import {useEffect, useState} from "react";
-import {getLinks, getSpecialistsCards, getSpecialistsInfo} from "../utils/getInfo.js";
+import {getSpecialistsCards} from "../utils/getInfo.js";
 import {useApp} from "../hooks/useApp.js";
 
 export default function Specialists() {

@@ -213,10 +213,10 @@ export default function AdminPanel() {
             formData.append('specialists', JSON.stringify({
                 full_name: item.full_name,
                 experience: item.experience,
-                photo: typeof(item.photo) === "string" ? item.photo
+                photo: typeof (item.photo) === "string" ? item.photo
                     : item.photo !== undefined ? item.photo[0].name : ""
             }));
-            if (typeof(item.photo) !== "string" && item.photo !== undefined)
+            if (typeof (item.photo) !== "string" && item.photo !== undefined)
                 formData.append('photos', item.photo[0]); // Добавляем файл
         });
         formData.append("currentCity", city);
@@ -375,8 +375,7 @@ export default function AdminPanel() {
                                     <AdminThemeContainerFiles theme="files" info={legalInfo} id={"legal"} key={51}/>
                                     <AdminThemeContainerFiles theme="files" info={aboutInfo} id={"about"} key={52}/>
                                     <AdminThemeContainerPictures theme="mainPictures"
-                                                                 info={{title: "Изображения главной страницы"}}
-                                                                 methods={methods}/>
+                                                                 info={{title: "Изображения главной страницы"}}/>
                                     <AdminThemeContainerOrgs info={orgsInfo} methods={methods} key={53}/>
                                     <div onClick={handleSubmit(onSave)} className="admin__panel-save-button">
                                         Сохранить <img
@@ -404,7 +403,8 @@ export default function AdminPanel() {
                                     <AdminThemeContainerInputs info={contactInfo} theme="contacts" key={103}/>
                                     <AdminThemeContainerInputs info={workTimeInfo} theme="workTime" key={104}/>
                                     <AdminThemeContainerFiles theme="files" info={priceInfo} id={"price"} key={105}/>
-                                    <AdminThemeContainerSpecialists info={{title: "Специалисты"}} city={isActive} methods={methods}
+                                    <AdminThemeContainerSpecialists info={{title: "Специалисты"}} city={isActive}
+                                                                    methods={methods}
                                                                     key={106}/>
                                     <div onClick={handleSubmit(onSave)} className="admin__panel-save-button">
                                         Сохранить <img

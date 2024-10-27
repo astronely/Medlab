@@ -233,9 +233,9 @@ function AdminThemeSpecialist({info, onClickDelete}) {
     )
 }
 
-export function AdminThemeContainerPictures({info, methods}) {
+export function AdminThemeContainerPictures({info}) {
     const [pictures, setPictures] = useState([{id: 0}]);
-    const [counter, setCounter] = useState(0);
+    // const [counter, setCounter] = useState(0);
     const startIndex = 2;
 
     // const onClickAdd = () => {
@@ -265,7 +265,7 @@ export function AdminThemeContainerPictures({info, methods}) {
     )
 }
 
-function AdminThemePicture({info, onClickDelete}) {
+function AdminThemePicture({info}) {
     const id = info.id;
 
     const picturesInputInfo = [
