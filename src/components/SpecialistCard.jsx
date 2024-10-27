@@ -5,7 +5,7 @@ import "./styles/specialistCard.scss"
 export default function SpecialistCard({specialist, style={}}) {
 
     const specialistImage = specialist.sex === "woman" ? WomanPlaceholder : ManPlaceholder; // TODO: change to gender
-    console.log(specialist)
+    const specialistExperience = specialist.experience.trim().split(";");
     return (
         <div className="specialist__card" style={style}>
             <div className="specialist__card-image-container">
@@ -15,7 +15,9 @@ export default function SpecialistCard({specialist, style={}}) {
             <div className="specialist__label">
                 <div className="specialist__label-name">{specialist.full_name}</div>
                 <div className="specialist__label-experience">
-                    <span>{specialist.experience}</span>
+                    {specialistExperience.map((item) => (
+                        <span>{item}</span>
+                    ))}
                     {/*{specialist.experience.map((experience, index) => (*/}
                     {/*    <span key={index}>{experience}</span>*/}
                     {/*))}*/}

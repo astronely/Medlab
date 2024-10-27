@@ -90,7 +90,7 @@ export default function AdminPanel() {
     const [cityToDelete, setCityToDelete] = useState({});
     const [cities, setCities] = useState([{name: "Общая информация"}]);
 
-    const [isActive, setIsActive] = useState("");
+    const [isActive, setIsActive] = useState("Общая информация");
     const [isEditing, setIsEditing] = useState(false);
 
     const onClick = (name) => {
@@ -157,7 +157,6 @@ export default function AdminPanel() {
         if (city !== "") {
             formData.append("currentCity", city);
         }
-
         axios.post(`${serverAddress}/api/${theme}/create`, formData)
             .then(res => {
                 console.log(`${theme} info successfully updated!`);
@@ -207,9 +206,11 @@ export default function AdminPanel() {
             formData.append('specialists', JSON.stringify({
                 full_name: item.full_name,
                 experience: item.experience,
-                photo: item.photo[0].name
+                photo: typeof(item.photo) === "string" ? item.photo
+                    : item.photo !== undefined ? item.photo[0].name : ""
             }));
-            formData.append('photos', item.photo[0]); // Добавляем файл
+            if (typeof(item.photo) !== "string" && item.photo !== undefined)
+                formData.append('photos', item.photo[0]); // Добавляем файл
         });
         formData.append("currentCity", isActive);
 
@@ -224,19 +225,10 @@ export default function AdminPanel() {
             .catch(err => console.log(err))
     }
 
-    const updateSpecialist = async (data) => {
-        axios.put(`${serverAddress}/api/specialist/update/${isActive}`, data)
-            .then(res => {
-                console.log("Specialist successfully updated!")
-                }
-            )
-            .catch(err => console.log(err))
-    }
-
-
     const onSave = async (data) => {
         console.log("DATA: ", data)
         if (isActive === "Общая информация") {
+            console.log("Общая информация DATA SEND");
             await createFile(data.files.about, "about");
             await createFile(data.files.legal, "legal");
             await createText(data.orgs, "authority");
@@ -251,15 +243,7 @@ export default function AdminPanel() {
         }
 
         console.log("SPECIALISTS DATA: ", data.specialists)
-        // TODO: rework it to single
-        // for (let item in data.specialists) {
-        //     const currentSpecialist = data.specialists.item;
-        //     if (typeof(currentSpecialist.photo) === "string") {
-        //         await updateSpecialist(currentSpecialist);
-        //         continue;
-        //     }
-        //     await createSpecialist(currentSpecialist);
-        // }
+
         await createFile(data.files.price, "price", isActive);
         await createSpecialist(data.specialists);
     }
@@ -274,6 +258,7 @@ export default function AdminPanel() {
             const specialists = await getSpecialistsInfo(isActive);
             const city = await getCityInfo(isActive);
 
+            console.log(priceFiles)
             setValue("files", Object.assign([], {
                 about: aboutFiles,
                 legal: legalFiles,

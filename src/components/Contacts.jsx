@@ -49,10 +49,10 @@ export default function Contacts() {
 
             setAddressInfo({text: res[0].address})
 
-            const coords = data.coordinates.split(";");
+            const coords = data.coordinates.trim().split(";");
             setCoordinates([parseFloat(coords[0]), parseFloat(coords[1])])
-            const rawScheduleGive = data.bio_give.split(";");
-            const rawScheduleGet = data.bio_get.split(";");
+            const rawScheduleGive = data.bio_give.trim().split(";");
+            const rawScheduleGet = data.bio_get.trim().split(";");
             setScheduleInfo([
                 {
                     weekdays: rawScheduleGive[0],
