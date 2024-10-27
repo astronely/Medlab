@@ -1,3 +1,14 @@
+@keyframes FadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .placeholder {
   display: flex;
   justify-content: center;
@@ -9,6 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: FadeIn 1.5s ease-in-out;
   }
   &__picture {
     max-width: 100%;
