@@ -31,10 +31,10 @@ export default function Footer() {
                 <div className="footer__top">
                     <Logo />
                     <div className="footer__links">
-                        <SocialLink picture={Whatsapp} text={`${cityData.phone}`} type={"whatsapp"}/>
-                        <SocialLink picture={VK} text={`${cityData.vk}`} type={"vk"}/>
-                        <SocialLink picture={Phone} text={`${cityData.phone}`} type={"phone"}/>
-                        <SocialLink picture={Envelope} text={`${cityData.email}`} type={"email"}/>
+                        <SocialLink picture={Whatsapp} text={`${cityData.phone ? cityData.phone : "Placeholder"}`} type={"whatsapp"}/>
+                        <SocialLink picture={VK} text={`${cityData.vk ? cityData.vk : "Placeholder"}`} type={"vk"}/>
+                        <SocialLink picture={Phone} text={`${cityData.phone ? cityData.phone : "Placeholder"}`} type={"phone"}/>
+                        <SocialLink picture={Envelope} text={`${cityData.email ? cityData.email : "Placeholder"}`} type={"email"}/>
                     </div>
                 </div>
                 <div className="footer__bottom">
