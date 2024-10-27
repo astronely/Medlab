@@ -1,11 +1,11 @@
 import {createContext, useEffect, useState} from "react";
 
 export const AppContext = createContext({
-    currentCity: 'г. Сим',
+    currentCity: '',
 })
 
 export const AppContextProvider = ({children}) => {
-    const cityNow = localStorage.getItem("currentCity") ? localStorage.getItem("currentCity") : 'г. Сим';
+    const cityNow = localStorage.getItem("currentCity") ? localStorage.getItem("currentCity") : '';
     const [currentCity, setCurrentCity] = useState(cityNow);
 
     return (
