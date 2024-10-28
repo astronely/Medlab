@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles/adminGuide.scss';
 
+// TODO: Поставить правильные размеры в описании изображений
 const AdminGuide = () => (
     <div className="admin-guide">
         <h2 className="admin-guide__header">Методичка по использованию Админ-панели</h2>

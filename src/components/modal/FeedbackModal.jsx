@@ -6,6 +6,7 @@ import InputMask from "react-input-mask"
 import {useApp} from "../../hooks/useApp.js";
 
 export default function FeedbackModal({open = false}) {
+    // TODO: Сделать город изменяемым по смене в нав-баре
     const {currentCity} = useApp();
     const [isError, setIsError] = useState(false);
     const [formData, setFormData] = useState({
