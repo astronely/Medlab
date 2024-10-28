@@ -3,7 +3,7 @@ import {Controller, useFormContext} from "react-hook-form";
 import AddImage from "/src/assets/admin/add.svg"
 import RemoveImage from "/src/assets/admin/remove.svg"
 
-import {getOnlyInfo, getSpecialistsInfo} from "../utils/getInfo.js";
+import {getOnlyInfo, getPictures, getSpecialistsInfo} from "../utils/getInfo.js";
 
 export function AdminThemeContainerFiles({
                                              info,
@@ -118,7 +118,7 @@ export function AdminThemeContainerOrgs({info, methods}) {
         }
         setTimeout(() => {
             fetchData().catch(err => console.log(err))
-        }, 500)
+        }, 700)
     }, [])
 
     return (
@@ -182,7 +182,7 @@ export function AdminThemeContainerSpecialists({info, city, methods}) {
         }
         setTimeout(() => {
             fetchData().catch(err => console.log(err))
-        }, 500)
+        }, 550)
     }, [city])
 
     return (
@@ -234,23 +234,15 @@ function AdminThemeSpecialist({info, onClickDelete}) {
 }
 
 export function AdminThemeContainerPictures({info}) {
-    const [pictures, setPictures] = useState([{id: 0}]);
+    const [pictures, setPictures] = useState([]);
     // const [counter, setCounter] = useState(0);
     const startIndex = 2;
 
-    // const onClickAdd = () => {
-    //     setPictures(pictures => [...pictures, {
-    //         id: counter,
-    //         name: pictures.length,
-    //     }]);
-    //     setCounter(prevState => prevState + 1);
-    // }
-    //
-    // const onClickDelete = (id) => {
-    //     console.log("ID: ", id)
-    //     methods.unregister(`mainPictures.${id}`)
-    //     setPictures(pictures.filter((item) => item.id !== id))
-    // }
+    useEffect(() => {
+        setTimeout(() => {
+            setPictures([{id: 0}])
+        }, 700)
+    }, [])
 
     return (
         <div className="admin__theme-specialists-container">

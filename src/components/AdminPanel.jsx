@@ -15,7 +15,14 @@ import {useModal} from "../hooks/useModal.js";
 import SaveImage from "/src/assets/admin/Save.svg"
 import EditImage from "/src/assets/admin/Pencil.svg"
 import axios from "axios";
-import {getCities, getCityInfo, getOnlyInfo, getOnlyLinksName, getSpecialistsInfo} from "../utils/getInfo.js";
+import {
+    getCities,
+    getCityInfo,
+    getOnlyInfo,
+    getOnlyLinksName,
+    getPictures,
+    getSpecialistsInfo
+} from "../utils/getInfo.js";
 import AdminGuide from "./AdminGuide.jsx"
 export default function AdminPanel() {
     const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
@@ -142,13 +149,14 @@ export default function AdminPanel() {
         // console.log(files)
 
         for (let file of files) {
-            // console.log(file)
-            formData.append(`${theme}Files`, file);
+            if (file instanceof File) formData.append(`${theme}Files`, file, encodeURIComponent(file.name));
+            else formData.append(`${theme}Files`, file);
         }
 
         if (city !== "") {
             formData.append("currentCity", city);
         }
+
         axios.post(`${serverAddress}/api/${theme}/create`, formData)
             .then(() => {
                 console.log(`${theme} info successfully updated!`);
@@ -157,7 +165,7 @@ export default function AdminPanel() {
     }
 
     const createText = async (data, theme) => {
-        // console.log("CREATE TEXT: ", data)
+        console.log("CREATE TEXT: ", data)
         let dataToSend = {}
         if (data !== undefined) {
             const filteredData = Object.values(data).filter(item => item !== null && item !== undefined)
@@ -166,7 +174,7 @@ export default function AdminPanel() {
         }
 
         // console.log(dataToSend)
-        axios.post(`${serverAddress}/api/${theme}/create`, dataToSend)
+        axios.post(`${serverAddress}/api/authority/create`, dataToSend)
             .then(() => {
                 console.log(`${theme} info successfully updated!`)
             })
@@ -212,10 +220,10 @@ export default function AdminPanel() {
                 full_name: item.full_name,
                 experience: item.experience,
                 photo: typeof (item.photo) === "string" ? item.photo
-                    : item.photo !== undefined ? item.photo[0].name : ""
+                    : item.photo !== undefined ? encodeURIComponent(item.photo[0].name) : ""
             }));
             if (typeof (item.photo) !== "string" && item.photo !== undefined)
-                formData.append('photos', item.photo[0]); // Добавляем файл
+                formData.append('photos', item.photo[0], encodeURIComponent(item.photo[0].name)); // Добавляем файл
         });
         formData.append("currentCity", city);
 
@@ -232,13 +240,21 @@ export default function AdminPanel() {
 
     const createCommonPictures = async (data) => {
         const formData = new FormData();
-        if (data === undefined || data.length === 0) {
+        console.log(data)
+        if (data === undefined) {
             return;
         }
 
         for (let file in data) {
-            const fileToAdd = data[file][0];
+            if (data[file] === undefined) continue;
+            let fileToAdd = undefined;
+            if (Array.isArray(data[file])) fileToAdd = data[file][0];
+            if (typeof(data[file]) === "string") fileToAdd = data[file];
             console.log(fileToAdd)
+            if (fileToAdd instanceof File) {
+                formData.append(`commonPictures`, fileToAdd, encodeURIComponent(fileToAdd.name))
+                continue
+            }
             formData.append(`commonPictures`, fileToAdd);
         }
 
@@ -254,14 +270,14 @@ export default function AdminPanel() {
     const onSave = async (data) => {
         console.log("DATA: ", data)
         if (isActive === "Общая информация") {
-            console.log("Общая информация DATA SEND");
+            console.log("Общая информация DATA SEND", data);
             await createFile(data.files.about, "about");
             await createFile(data.files.legal, "legal");
             await createText(data.orgs, "authority");
             await createCommonPictures(data.mainPictures[0])
             return;
         }
-        console.log(cities)
+        // console.log(cities)
         if (prevCities.some(item => item.name === isActive)) {
             console.log("Update city!", isActive)
             await updateCity(data.city);
@@ -269,7 +285,7 @@ export default function AdminPanel() {
             await createCity(data.city);
         }
 
-        console.log("SPECIALISTS DATA: ", data.specialists)
+        // console.log("SPECIALISTS DATA: ", data.specialists)
 
         await createFile(data.files.price, "price", data.city.name);
         await createSpecialist(data.specialists, data.city.name);
@@ -283,9 +299,11 @@ export default function AdminPanel() {
             const priceFiles = await getOnlyLinksName("price", isActive);
             const authorities = await getOnlyInfo("authority");
             const specialists = await getSpecialistsInfo(isActive);
+            const commonPictures = await getPictures();
             const city = await getCityInfo(isActive);
 
-            console.log(priceFiles)
+            setValue("mainPictures", [commonPictures])
+
             setValue("files", Object.assign([], {
                 about: aboutFiles,
                 legal: legalFiles,
@@ -308,9 +326,10 @@ export default function AdminPanel() {
                     Object.fromEntries(specialists.map(item => [item.id, item]))
                     : {}
             )
-            console.log(specialists)
 
             setValue("orgs", Object.fromEntries(authorities.map(item => [item.id, item])))
+
+            console.log(methods.getValues())
         }
 
         fetchData().catch(err => console.log(err));
