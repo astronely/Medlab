@@ -3,13 +3,16 @@ import Button from "../ui/Button.jsx";
 import {useState} from "react";
 import {useModal} from "../../hooks/useModal.js";
 import InputMask from "react-input-mask"
+import {useApp} from "../../hooks/useApp.js";
 
 export default function FeedbackModal({open = false}) {
-
+    const {currentCity} = useApp();
     const [isError, setIsError] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
-        phone: ""
+        city: currentCity,
+        phone: "",
+        description: ""
     });
     const {setIsActive} = useModal();
     const formSubmitEmail = import.meta.env.VITE_FORM_SUBMIT_EMAIL;
@@ -43,12 +46,15 @@ export default function FeedbackModal({open = false}) {
                 },
                 body: new URLSearchParams({
                     name: formData.name,
-                    phone: formData.phone
+                    city: "",
+                    phone: formData.phone,
+                    description: formData.description
                 }).toString()
             });
 
             if (response.ok) {
-                setFormData({ name: "", phone: "" }); // Clear form
+                setFormData({ name: "", phone: "", description: "", city: currentCity}); // Clear form
+                alert("Письмо было отправлено!")
             } else {
                 throw new Error("Failed to send the message");
             }
@@ -68,6 +74,16 @@ export default function FeedbackModal({open = false}) {
                     </div>
                 </div>
                 <div className="modal__input-side">
+                    <input
+                        className="modal__input"
+                        placeholder="Ваш город"
+                        type="text"
+                        name="city"
+                        maxLength={100}
+                        value={formData.city}
+                        onChange={handleChange}
+                        required
+                    />
                     <input
                         className="modal__input"
                         placeholder="Ваше имя"
@@ -94,6 +110,16 @@ export default function FeedbackModal({open = false}) {
                             />
                         )}
                     </InputMask>
+                    <textarea
+                        className="modal__input"
+                        placeholder="Опишите вашу проблему"
+                        type="text"
+                        name="description"
+                        maxLength={100}
+                        value={formData.description}
+                        onChange={handleChange}
+                        required
+                    />
                     <div className="modal__input-button">
                         {isError && (
                             <div className="modal__input-error">
