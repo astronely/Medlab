@@ -89,7 +89,7 @@ export default function AdminPanel() {
 
     const [cityToDelete, setCityToDelete] = useState({});
     const [cities, setCities] = useState([{name: "Общая информация"}]);
-
+    const [prevCities, setPrevCities] = useState([{name: "Общая информация"}]);
     const [isActive, setIsActive] = useState("Общая информация");
     const [isEditing, setIsEditing] = useState(false);
 
@@ -263,9 +263,9 @@ export default function AdminPanel() {
             await createCommonPictures(data.mainPictures[0])
             return;
         }
-
-        if (cities.some(item => item.name === data.city.name)) {
-            console.log("Update city!")
+        console.log(cities)
+        if (prevCities.some(item => item.name === isActive)) {
+            console.log("Update city!", isActive)
             await updateCity(data.city);
         } else {
             await createCity(data.city);
@@ -323,8 +323,12 @@ export default function AdminPanel() {
         const fetchData = async () => {
             const allCities = await getCities();
             setCities([{name: "Общая информация"}]);
+            setPrevCities([{name: "Общая информация"}]);
             for (let city of allCities) {
                 setCities(cities => [...cities, {
+                    name: city.name
+                }])
+                setPrevCities(prevCities => [...prevCities, {
                     name: city.name
                 }])
             }

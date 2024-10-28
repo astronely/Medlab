@@ -25,16 +25,17 @@ export default function Footer() {
         fetchData().catch(err => console.log(err))
     }, [currentCity])
 
+
     return (
         <Container>
             <div className="footer">
                 <div className="footer__top">
                     <Logo />
                     <div className="footer__links">
-                        <SocialLink picture={Whatsapp} text={`${cityData.phone ? cityData.phone : "Placeholder"}`} type={"whatsapp"}/>
-                        <SocialLink picture={VK} text={`${cityData.vk ? cityData.vk : "Placeholder"}`} type={"vk"}/>
-                        <SocialLink picture={Phone} text={`${cityData.phone ? cityData.phone : "Placeholder"}`} type={"phone"}/>
-                        <SocialLink picture={Envelope} text={`${cityData.email ? cityData.email : "Placeholder"}`} type={"email"}/>
+                        <SocialLink picture={Whatsapp} text={`${cityData ? cityData.phone : "Placeholder"}`} type="whatsapp"/>
+                        <SocialLink picture={VK} text={`${cityData ? cityData.vk : "Placeholder"}`} type="vk"/>
+                        <SocialLink picture={Phone} text={`${cityData ? cityData.phone : "Placeholder"}`} type="phone"/>
+                        <SocialLink picture={Envelope} text={`${cityData ? cityData.email : "Placeholder"}`} type="email"/>
                     </div>
                 </div>
                 <div className="footer__bottom">
