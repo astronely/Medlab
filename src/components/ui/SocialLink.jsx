@@ -9,13 +9,6 @@ export default function SocialLink({picture, text, type}) {
     return (
         <div className={styles.link}>
             <img src={picture} alt={"Footer link icon"}/>
-            {/*{*/}
-            {/*    type === "phone" ?*/}
-            {/*        <span><a className={styles.link} href={`tel: ${text}`}>{text}</a></span>*/}
-            {/*        :*/}
-            {/*        <span><a className={styles.link} style={{cursor: "pointer"}}*/}
-            {/*                 onClick={() => onClickEmail(text)}>{text}</a></span>*/}
-            {/*}*/}
             {
                 type === "email" || type === "whatsapp" ?
                     <span><a className={styles.link} style={{cursor: "pointer"}}
