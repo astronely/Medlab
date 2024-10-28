@@ -10,55 +10,79 @@ import {useEffect, useState} from "react";
 import {getPictures} from "../utils/getInfo.js";
 
 export default function HomeInfo() {
-    const [pictures, setPictures] = useState({});
-
+    const [pictures, setPictures] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
+
     const getPicture = (pictureName) => {
         return `${serverAddress}/assets/commonPicture/${pictureName}`
     }
+
     useEffect(() => {
         const fetchData = async () => {
             const fetchedData = await getPictures();
-            setPictures(fetchedData);
+            setPictures([]);
+            for (let item in fetchedData) {
+                if (item === "id") continue;
+                console.log(item, fetchedData[item])
+                setPictures(pictures => [...pictures,
+                    <img className="home__picture" src={fetchedData[item] ? getPicture(fetchedData[item]) : xxl}  alt="Main picture"/>])
+            }
             console.log(pictures)
+            setIsLoading(false);
         }
+
         fetchData().catch(err => console.log(err))
     }, [])
 
-    return(
+    return (
         <>
             <Container>
-                <div className="home__main">
-                    {/*xxl*/}
-                    <MediaQuery minWidth={1400}>
-                        <img className="home__picture" src={getPicture(pictures.xxl) ? getPicture(pictures.xxl) : xxl} alt="Main picture"/>
-                    </MediaQuery>
+                {isLoading ? <> </> :
+                    <div className="home__main">
+                        {/*xxl*/}
+                        <MediaQuery minWidth={1400}>
+                            {pictures[0]}
+                            {/*<img className="home__picture" src={pictures[0]}*/}
+                            {/*     alt="Main picture"/>*/}
+                        </MediaQuery>
 
-                    {/*xl*/}
-                    <MediaQuery minWidth={1200} maxWidth={1399}>
-                        <img className="home__picture" src={getPicture(pictures.xl) ? getPicture(pictures.xl) : xl} alt="Main picture"/>
-                    </MediaQuery>
+                        {/*xl*/}
+                        <MediaQuery minWidth={1200} maxWidth={1399}>
+                            {pictures[1]}
+                            {/*<img className="home__picture" src={pictures.xl ? getPicture(pictures.xl) : xl}*/}
+                            {/*     alt="Main picture"/>*/}
+                        </MediaQuery>
 
-                    {/*lg*/}
-                    <MediaQuery minWidth={992} maxWidth={1199}>
-                        <img className="home__picture" src={getPicture(pictures.lg) ? getPicture(pictures.lg) : lg} alt="Main picture"/>
-                    </MediaQuery>
+                        {/*lg*/}
+                        <MediaQuery minWidth={992} maxWidth={1199}>
+                            {pictures[2]}
+                            {/*<img className="home__picture" src={pictures.lg ? getPicture(pictures.lg) : lg}*/}
+                            {/*     alt="Main picture"/>*/}
+                        </MediaQuery>
 
-                    {/*md*/}
-                    <MediaQuery minWidth={768} maxWidth={991}>
-                        <img className="home__picture" src={getPicture(pictures.md) ? getPicture(pictures.md) : md} alt="Main picture"/>
-                    </MediaQuery>
+                        {/*md*/}
+                        <MediaQuery minWidth={768} maxWidth={991}>
+                            {pictures[3]}
+                            {/*<img className="home__picture" src={pictures.md ? getPicture(pictures.md) : md}*/}
+                            {/*     alt="Main picture"/>*/}
+                        </MediaQuery>
 
-                    {/*sm*/}
-                    <MediaQuery minWidth={576} maxWidth={767}>
-                        <img className="home__picture" src={getPicture(pictures.sm) ? getPicture(pictures.sm) : sm} alt="Main picture"/>
-                    </MediaQuery>
+                        {/*sm*/}
+                        <MediaQuery minWidth={576} maxWidth={767}>
+                            {pictures[4]}
+                            {/*<img className="home__picture" src={pictures.sm ? getPicture(pictures.sm) : sm}*/}
+                            {/*     alt="Main picture"/>*/}
+                        </MediaQuery>
 
-                    {/*xs*/}
-                    <MediaQuery minWidth={0} maxWidth={575}>
-                        <img className="home__picture" src={getPicture(pictures.sm) ? getPicture(pictures.sm) : sm} alt="Main picture"/>
-                    </MediaQuery>
-                </div>
+                        {/*xs*/}
+                        <MediaQuery minWidth={0} maxWidth={575}>
+                            {pictures[4]}
+                            {/*<img className="home__picture" src={pictures.sm ? getPicture(pictures.sm) : sm}*/}
+                            {/*     alt="Main picture"/>*/}
+                        </MediaQuery>
+                    </div>
+                }
             </Container>
         </>
     )

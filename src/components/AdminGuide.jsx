@@ -49,7 +49,7 @@ const AdminGuide = () => (
                 <li className="admin-guide__list-item"><strong>Телефон</strong></li>
                 <li className="admin-guide__list-item"><strong>Адрес</strong> (формат: текст, пример: г.
                     Челябинск, проспект Ленина 20)</li>
-                <li className="admin-guide__list-item"><strong>Время работыа</strong> (формат: будние
+                <li className="admin-guide__list-item"><strong>Время работы</strong> (формат: будние
                     дни;выходные, пример: 16:00-18:00;15:00-19:00)</li>
                 <li className="admin-guide__list-item"><strong>Цены</strong> (прикрепляются как файлы)
                 </li>
