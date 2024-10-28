@@ -16,16 +16,14 @@ import SaveImage from "/src/assets/admin/Save.svg"
 import EditImage from "/src/assets/admin/Pencil.svg"
 import axios from "axios";
 import {getCities, getCityInfo, getOnlyInfo, getOnlyLinksName, getSpecialistsInfo} from "../utils/getInfo.js";
-
+import AdminGuide from "./AdminGuide.jsx"
 export default function AdminPanel() {
     const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
-
     const legalInfo = {
         title: "Правовая информация",
         text: "Перетащите файлы сюда",
         placeholder: "кнопка загрузки файлов/область прикреп.файлов"
     }
-
     const aboutInfo = {
         title: "О нас",
         text: "Перетащите файлы сюда",
@@ -376,6 +374,7 @@ export default function AdminPanel() {
                             :
                             isActive === "Общая информация" ?
                                 <FormProvider {...methods}>
+                                    <AdminGuide></AdminGuide>
                                     <AdminThemeContainerFiles theme="files" info={legalInfo} id={"legal"} key={51}/>
                                     <AdminThemeContainerFiles theme="files" info={aboutInfo} id={"about"} key={52}/>
                                     <AdminThemeContainerPictures theme="mainPictures"
