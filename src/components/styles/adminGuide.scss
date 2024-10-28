@@ -1,0 +1,45 @@
+.admin-guide {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+  &__header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #004851;
+    padding-bottom: 20px;
+  }
+
+  &__section {
+    margin-bottom: 20px;
+
+    &-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #004851;
+      padding-bottom: 8px;
+      font-family: "PT Sans", sans-serif;
+    }
+
+    &-content {
+      padding-left: 20px;
+      font-size: 1rem;
+      color: #2C2A29;
+      font-family: "PT Sans", sans-serif;
+    }
+  }
+
+  &__list {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 40px;
+    font-family: "PT Sans", sans-serif;
+
+    &-item {
+      margin-bottom: 10px;
+      font-size: 1.12rem;
+      color: #2C2A29;
+      font-family: "PT Sans", sans-serif;
+    }
+  }
+}
