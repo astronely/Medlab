@@ -33,6 +33,7 @@ const AdminGuide = () => (
                         <li className="admin-guide__list-item"><strong>SM</strong> - 1920x1080px</li>
                         <li className="admin-guide__list-item"><strong>XS</strong> - 1920x1080px</li>
                     </ul>
+                    При необходимости изменить хотя бы одно изображение, требуется загрузить все 6.
                 </li>
             </ul>
         </div>

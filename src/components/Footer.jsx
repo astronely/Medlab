@@ -18,7 +18,7 @@ export default function Footer() {
     useEffect(() => {
         const fetchData = async () => {
             const fetchedData = await getCityInfo(currentCity);
-            console.log("CITY DATA: ", fetchedData)
+            // console.log("CITY DATA: ", fetchedData)
             setCityData(fetchedData[0]);
             // console.log("CITY DATA: ", cityData)
         }

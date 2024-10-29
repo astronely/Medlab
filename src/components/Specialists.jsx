@@ -28,7 +28,7 @@ export default function Specialists() {
         }
 
         fetchSpecialists().catch(err => console.log(err))
-        console.log(specialists)
+        // console.log(specialists)
     }, [currentCity])
 
     return (
