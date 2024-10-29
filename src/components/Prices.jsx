@@ -22,9 +22,9 @@ export default function Prices() {
 
     useEffect(() => {
         setPrices([]);
-        console.log(currentCity)
-        console.log(serverAddress)
-        console.log(serverAssetsFolder)
+        // console.log(currentCity)
+        // console.log(serverAddress)
+        // console.log(serverAssetsFolder)
         getLinks(prices, setPrices, "price", serverAssetsFolder, currentCity.replace("г. ", ""))
             .catch(err => console.log(err))
     }, [currentCity])

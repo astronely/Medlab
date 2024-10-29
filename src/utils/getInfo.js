@@ -7,7 +7,7 @@ export const getLinks = async (links, setLinks, theme, assetsFolder, city = unde
     const url = city === undefined ? `${serverAddress}/api/${theme}/get` : `${serverAddress}/api/${theme}/get/${city}`
     axios.get(url)
         .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             for (let link of res.data) {
                 setLinks(links => [...links,
                     {

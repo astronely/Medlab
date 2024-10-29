@@ -24,7 +24,12 @@ import {
     getSpecialistsInfo
 } from "../utils/getInfo.js";
 import AdminGuide from "./AdminGuide.jsx"
+import {useNavigate} from "react-router-dom";
+import {isAuth} from "../utils/authUtils.js";
+
 export default function AdminPanel() {
+    const navigate = useNavigate();
+
     const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
     const legalInfo = {
         title: "Правовая информация",
@@ -157,7 +162,7 @@ export default function AdminPanel() {
             formData.append("currentCity", city);
         }
 
-        axios.post(`${serverAddress}/api/${theme}/create`, formData)
+        await axios.post(`${serverAddress}/api/${theme}/create`, formData)
             .then(() => {
                 console.log(`${theme} info successfully updated!`);
             })
@@ -165,7 +170,7 @@ export default function AdminPanel() {
     }
 
     const createText = async (data, theme) => {
-        console.log("CREATE TEXT: ", data)
+        // console.log("CREATE TEXT: ", data)
         let dataToSend = {}
         if (data !== undefined) {
             const filteredData = Object.values(data).filter(item => item !== null && item !== undefined)
@@ -174,7 +179,7 @@ export default function AdminPanel() {
         }
 
         // console.log(dataToSend)
-        axios.post(`${serverAddress}/api/authority/create`, dataToSend)
+        await axios.post(`${serverAddress}/api/authority/create`, dataToSend)
             .then(() => {
                 console.log(`${theme} info successfully updated!`)
             })
@@ -183,7 +188,7 @@ export default function AdminPanel() {
 
     const createCity = async (data) => {
         delete data["id"];
-        axios.post(`${serverAddress}/api/city/create`, data)
+        await axios.post(`${serverAddress}/api/city/create`, data)
             .then(() => {
                 console.log("City info successfully created!")
             })
@@ -192,7 +197,7 @@ export default function AdminPanel() {
 
     const updateCity = async (data) => {
         delete data["id"];
-        axios.put(`${serverAddress}/api/city/update/${isActive}`, data)
+        await axios.put(`${serverAddress}/api/city/update/${isActive}`, data)
             .then(() => {
                 console.log("City info successfully updated!")
             })
@@ -201,10 +206,10 @@ export default function AdminPanel() {
 
     const createSpecialist = async (data, city) => {
         const formData = new FormData();
-        console.log("Specialist data: ", data)
+        // console.log("Specialist data: ", data)
         if (data === undefined) {
             formData.append("currentCity", city);
-            axios.post(`${serverAddress}/api/specialist/create`, formData, {
+            await axios.post(`${serverAddress}/api/specialist/create`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -227,7 +232,7 @@ export default function AdminPanel() {
         });
         formData.append("currentCity", city);
 
-        axios.post(`${serverAddress}/api/specialist/create`, formData, {
+        await axios.post(`${serverAddress}/api/specialist/create`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -240,17 +245,18 @@ export default function AdminPanel() {
 
     const createCommonPictures = async (data) => {
         const formData = new FormData();
-        console.log(data)
+        // console.log(data)
         if (data === undefined) {
             return;
         }
 
+        delete data["id"];
         for (let file in data) {
             if (data[file] === undefined) continue;
             let fileToAdd = undefined;
             if (Array.isArray(data[file])) fileToAdd = data[file][0];
             if (typeof(data[file]) === "string") fileToAdd = data[file];
-            console.log(fileToAdd)
+            // console.log(fileToAdd)
             if (fileToAdd instanceof File) {
                 formData.append(`commonPictures`, fileToAdd, encodeURIComponent(fileToAdd.name))
                 continue
@@ -258,9 +264,9 @@ export default function AdminPanel() {
             formData.append(`commonPictures`, fileToAdd);
         }
 
-        console.log(data)
+        // console.log(data)
 
-        axios.post(`${serverAddress}/api/commonPicture/create`, formData)
+        await axios.post(`${serverAddress}/api/commonPicture/create`, formData)
             .then(res => {
                 console.log(`CommonPicture info successfully updated! \n ${res.data}`);
             })
@@ -269,17 +275,19 @@ export default function AdminPanel() {
 
     const onSave = async (data) => {
         console.log("DATA: ", data)
+        let _;
         if (isActive === "Общая информация") {
             console.log("Общая информация DATA SEND", data);
             await createFile(data.files.about, "about");
             await createFile(data.files.legal, "legal");
             await createText(data.orgs, "authority");
             await createCommonPictures(data.mainPictures[0])
+            window.location.reload()
             return;
         }
         // console.log(cities)
         if (prevCities.some(item => item.name === isActive)) {
-            console.log("Update city!", isActive)
+            // console.log("Update city!", isActive)
             await updateCity(data.city);
         } else {
             await createCity(data.city);
@@ -289,8 +297,8 @@ export default function AdminPanel() {
 
         await createFile(data.files.price, "price", data.city.name);
         await createSpecialist(data.specialists, data.city.name);
+        window.location.reload()
     }
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -328,15 +336,21 @@ export default function AdminPanel() {
             )
 
             setValue("orgs", Object.fromEntries(authorities.map(item => [item.id, item])))
-
-            console.log(methods.getValues())
         }
 
         fetchData().catch(err => console.log(err));
-        // console.log("ORGS: ", methods.getValues().orgs)
     }, [isActive])
 
     useEffect(() => {
+
+        const checkAuth = async () => {
+            const isAuthorized = await isAuth(serverAddress);
+            console.log("is Authorized?: ", isAuthorized)
+            if (!isAuthorized) {
+                navigate("/", {replace: true})
+            }
+        }
+
         const fetchData = async () => {
             const allCities = await getCities();
             setCities([{name: "Общая информация"}]);
@@ -351,7 +365,12 @@ export default function AdminPanel() {
             }
         }
 
-        fetchData().catch(err => console.log(err))
+        const initAdminPanel = async () => {
+            await fetchData().catch(err => console.log(err));
+            await checkAuth().catch(err => console.log(err));
+        }
+
+        initAdminPanel().catch(err => console.log(err))
     }, [])
 
     return (

@@ -8,8 +8,10 @@ import {ModalManager} from "./components/modal/ModalManager.jsx";
 import SpecialistsPage from "./pages/SpecialistsPage.jsx";
 import AdminLoginPage from "./pages/AdminLoginPage.jsx";
 import {AdminPanelPage} from "./pages/AdminPanelPage.jsx";
+import axios from "axios";
 
 function App() {
+    axios.defaults.withCredentials = true;
     const router = createBrowserRouter([
         {
             path: "/",
