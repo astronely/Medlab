@@ -275,7 +275,6 @@ export default function AdminPanel() {
 
     const onSave = async (data) => {
         console.log("DATA: ", data)
-        let _;
         if (isActive === "Общая информация") {
             console.log("Общая информация DATA SEND", data);
             await createFile(data.files.about, "about");
