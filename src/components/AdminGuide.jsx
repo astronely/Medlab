@@ -24,14 +24,14 @@ const AdminGuide = () => (
                 </li>
                 <li className="admin-guide__list-item">
                     <strong>Добавление изображений к главной странице</strong> – изображения прикрепляются в 6 различных
-                    форматах для корректного отображения на всех экранах:
+                    форматах для корректного отображения на всех экранах, <strong>список рекомендуемых размеров</strong>:
                     <ul className="admin-guide__list">
-                        <li className="admin-guide__list-item"><strong>XXL</strong> - 1920x1080px</li>
-                        <li className="admin-guide__list-item"><strong>XL</strong> - 1920x1080px</li>
-                        <li className="admin-guide__list-item"><strong>LG</strong> - 1920x1080px</li>
-                        <li className="admin-guide__list-item"><strong>MD</strong> - 1920x1080px</li>
-                        <li className="admin-guide__list-item"><strong>SM</strong> - 1920x1080px</li>
-                        <li className="admin-guide__list-item"><strong>XS</strong> - 1920x1080px</li>
+                        <li className="admin-guide__list-item"><strong>XXL</strong> - 1320x800px</li>
+                        <li className="admin-guide__list-item"><strong>XL</strong> - 1140x800px</li>
+                        <li className="admin-guide__list-item"><strong>LG</strong> - 964x800px</li>
+                        <li className="admin-guide__list-item"><strong>MD</strong> - 720x800px</li>
+                        <li className="admin-guide__list-item"><strong>SM</strong> - 540x800px</li>
+                        <li className="admin-guide__list-item"><strong>XS</strong> - 540x800px</li>
                     </ul>
                     При необходимости изменить хотя бы одно изображение, требуется загрузить все 6.
                 </li>
