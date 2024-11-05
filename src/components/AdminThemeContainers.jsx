@@ -26,7 +26,7 @@ export function AdminThemeContainerFiles({
 
     const handleDrop = (event, onChange) => {
         event.preventDefault();
-        const files = Array.from(event.target.files);
+        const files = Array.from(event.dataTransfer.files);
         onChange(files);
     }
 

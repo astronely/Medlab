@@ -154,7 +154,7 @@ export default function AdminPanel() {
         // console.log(files)
 
         for (let file of files) {
-            if (file instanceof File) formData.append(`${theme}Files`, file, encodeURIComponent(file.name));
+            if (file instanceof File) formData.append(`${theme}Files`, file, file.name);
             else formData.append(`${theme}Files`, file);
         }
 
@@ -163,7 +163,8 @@ export default function AdminPanel() {
         }
 
         await axios.post(`${serverAddress}/api/${theme}/create`, formData)
-            .then(() => {
+            .then((res) => {
+                console.log(res)
                 console.log(`${theme} info successfully updated!`);
             })
             .catch(err => console.log(err));
@@ -225,10 +226,10 @@ export default function AdminPanel() {
                 full_name: item.full_name,
                 experience: item.experience,
                 photo: typeof (item.photo) === "string" ? item.photo
-                    : item.photo !== undefined ? encodeURIComponent(item.photo[0].name) : ""
+                    : item.photo !== undefined ? item.photo[0].name : ""
             }));
             if (typeof (item.photo) !== "string" && item.photo !== undefined)
-                formData.append('photos', item.photo[0], encodeURIComponent(item.photo[0].name)); // Добавляем файл
+                formData.append('photos', item.photo[0], item.photo[0].name); // Добавляем файл
         });
         formData.append("currentCity", city);
 
@@ -258,7 +259,7 @@ export default function AdminPanel() {
             if (typeof(data[file]) === "string") fileToAdd = data[file];
             // console.log(fileToAdd)
             if (fileToAdd instanceof File) {
-                formData.append(`commonPictures`, fileToAdd, encodeURIComponent(fileToAdd.name))
+                formData.append(`commonPictures`, fileToAdd, fileToAdd.name)
                 continue
             }
             formData.append(`commonPictures`, fileToAdd);
@@ -275,7 +276,6 @@ export default function AdminPanel() {
 
     const onSave = async (data) => {
         console.log("DATA: ", data)
-        let _;
         if (isActive === "Общая информация") {
             console.log("Общая информация DATA SEND", data);
             await createFile(data.files.about, "about");
