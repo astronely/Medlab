@@ -26,6 +26,8 @@ export const getOnlyLinksName = async (theme, city = "") => {
     await axios.get(url)
         .then(res => {
             for (let file of res.data) {
+                const decoder = new TextDecoder('utf-8');
+                const fileName = decoder.decode()
                 resToSend.push({name: file.file_name});
             }
             // console.log(`DATA for ADMIN for ${theme}: `, resToSend)
