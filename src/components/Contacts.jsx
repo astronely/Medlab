@@ -38,8 +38,8 @@ export default function Contacts() {
     }
 
     const directorInfo = {
-        email: "email@email.com",
-        telephone: "+7 (999) 999 88 77"
+        email: "medlab74@mail.ru",
+        telephone: "+7 (951) 489-53-62"
     }
 
     useEffect(() => {
