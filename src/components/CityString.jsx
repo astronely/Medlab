@@ -11,6 +11,7 @@ export default function CityString({cityName}) {
         localStorage.setItem("currentCity", cityName);
         setCurrentCity(cityName);
         setIsActive(false)
+        window.location.reload();
     }
 
     return (

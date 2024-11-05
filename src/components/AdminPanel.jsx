@@ -282,7 +282,7 @@ export default function AdminPanel() {
             await createFile(data.files.legal, "legal");
             await createText(data.orgs, "authority");
             await createCommonPictures(data.mainPictures[0])
-            // window.location.reload()
+            window.location.reload()
             return;
         }
         // console.log(cities)
@@ -297,7 +297,7 @@ export default function AdminPanel() {
 
         await createFile(data.files.price, "price", data.city.name);
         await createSpecialist(data.specialists, data.city.name);
-        // window.location.reload()
+        window.location.reload()
     }
 
     useEffect(() => {
