@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 
 export default function AdminLogin() {
     const navigate = useNavigate();
+    const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
 
     const {register, handleSubmit, reset} = useForm({
         defaultValues: {
@@ -16,7 +17,7 @@ export default function AdminLogin() {
     })
 
     const submitHandler = async data => {
-        await axios.post('http://localhost:8080/api/admin/login', data)
+        await axios.post(`${serverAddress}/api/admin/login`, data)
             .then(response => {
                 if (response.status === 200) {
                     navigate("/adminPanelPage", {replace: true})
