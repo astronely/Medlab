@@ -15,7 +15,7 @@ export default function HomeInfo() {
     const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
 
     const getPicture = (pictureName) => {
-        return `${serverAddress}/assets/commonPicture/${pictureName}`
+        return `${serverAddress}/mdlbassets/commonPicture/${pictureName}`
     }
 
     useEffect(() => {

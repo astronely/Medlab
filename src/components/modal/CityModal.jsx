@@ -6,12 +6,6 @@ import {getCities} from "../../utils/getInfo.js";
 export default function CityModal({open = false}) {
 
     const [cities, setCities] = useState([]);
-    // const cities = [
-    //     "г. Сим",
-    //     "г. Йошкар-ола",
-    //     "г. Челябинск",
-    //     "г. Екатеринбург"
-    // ]
 
     useEffect(() => {
         const fetchData = async () => {

@@ -109,8 +109,8 @@ export const getSpecialistsCards = async (specialists, setSpecialists, city) => 
         .then(res => {
             for (let specialist of res.data) {
                 const photoPath = specialist.photo === "man-placeholder.svg" ?
-                    `${serverAddress}/assets/${specialist.photo}`
-                    : `${serverAddress}/assets/${city}/specialist/${specialist.photo}`;
+                    `${serverAddress}/mdlbassets/${specialist.photo}`
+                    : `${serverAddress}/mdlbassets/${city}/specialist/${specialist.photo}`;
 
                 setSpecialists(specialists => [...specialists, {
                     full_name: specialist.full_name,

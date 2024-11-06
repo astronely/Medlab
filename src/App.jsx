@@ -9,9 +9,16 @@ import SpecialistsPage from "./pages/SpecialistsPage.jsx";
 import AdminLoginPage from "./pages/AdminLoginPage.jsx";
 import {AdminPanelPage} from "./pages/AdminPanelPage.jsx";
 import axios from "axios";
+import {openModal} from "./utils/modalUtils.js";
+import {useModal} from "./hooks/useModal.js";
 
 function App() {
     axios.defaults.withCredentials = true;
+    const {setIsActive, setModal} = useModal();
+    if (!localStorage.getItem("currentCity")) {
+        openModal(setIsActive, setModal, "chooseCity")
+    }
+
     const router = createBrowserRouter([
         {
             path: "/",

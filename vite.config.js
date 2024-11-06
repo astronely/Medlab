@@ -12,6 +12,13 @@ export default defineConfig({
       usePolling: true
     }
   },
+  preview : {
+    host: true,
+    port: 3030,
+    watch: {
+      usePolling: true
+    }
+  },
   css: {
     preprocessorOptions: {
       scss: {
