@@ -7,7 +7,7 @@ import "./styles/legal.scss"
 
 export default function LegalInformation() {
     const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
-    const serverAssetsFolder = `${serverAddress}/assets/legalInfo`;
+    const serverAssetsFolder = `${serverAddress}/mdlbassets/legalInfo`;
 
     const [legalInfoLinks, setLegalInfoLinks] = useState([]);
 

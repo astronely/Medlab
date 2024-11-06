@@ -10,7 +10,7 @@ import {useApp} from "../hooks/useApp.js";
 
 export default function AboutUs() {
     const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
-    const serverAssetsFolder = `${serverAddress}/assets/aboutUs`;
+    const serverAssetsFolder = `${serverAddress}/mdlbassets/aboutUs`;
 
     const {currentCity} = useApp();
     const [links, setLinks] = useState([]);

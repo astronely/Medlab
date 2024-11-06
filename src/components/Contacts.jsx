@@ -18,7 +18,7 @@ export default function Contacts() {
     const {currentCity} = useApp();
     const feedbackModalName = "feedback";
 
-    const [addressInfo, setAddressInfo] = useState("Placeholder for address"); // TODO: address from db
+    const [addressInfo, setAddressInfo] = useState("Placeholder for address");
     const [scheduleInfo, setScheduleInfo] = useState([
         {
             weekdays: "",
