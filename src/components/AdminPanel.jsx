@@ -286,6 +286,12 @@ export default function AdminPanel() {
             return;
         }
         // console.log(cities)
+
+        if (data.city.name.trim() === '') {
+            alert("Введите название города!");
+            return;
+        }
+
         if (prevCities.some(item => item.name === isActive)) {
             // console.log("Update city!", isActive)
             await updateCity(data.city);
