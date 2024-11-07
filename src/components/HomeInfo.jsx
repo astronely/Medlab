@@ -8,11 +8,14 @@ import md from '/src/assets/content/main/img/child-md.png';
 import sm from '/src/assets/content/main/img/child-sm.png';
 import {useEffect, useState} from "react";
 import {getPictures} from "../utils/getInfo.js";
+import {useApp} from "../hooks/useApp.js";
 
 export default function HomeInfo() {
+    const {serverAddress} = useApp();
+
     const [pictures, setPictures] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
+    // const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
 
     const getPicture = (pictureName) => {
         return `${serverAddress}/mdlbassets/commonPicture/${pictureName}`

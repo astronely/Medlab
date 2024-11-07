@@ -26,11 +26,12 @@ import {
 import AdminGuide from "./AdminGuide.jsx"
 import {useNavigate} from "react-router-dom";
 import {isAuth} from "../utils/authUtils.js";
+import {useApp} from "../hooks/useApp.js";
 
 export default function AdminPanel() {
     const navigate = useNavigate();
-
-    const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
+    const {serverAddress} = useApp();
+    // const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
     const legalInfo = {
         title: "Правовая информация",
         text: "Перетащите файлы сюда",
