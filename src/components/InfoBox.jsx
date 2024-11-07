@@ -11,7 +11,10 @@ export default function InfoBox({
             {isAddress ?
                 <div className="infobox__info">
                     <div className="infobox__title">Адрес:</div>
-                    <div className="infobox__text">Мы находимся по адресу: {info.text}</div>
+                    <div className="infobox__text">
+                        Мы находимся по адресу:
+                        <br/>{info.text}
+                    </div>
                 </div>
                 : isSchedule ?
                     <div className="infobox__info">
