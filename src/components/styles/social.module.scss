@@ -10,4 +10,11 @@
   color: #000000;
   cursor: pointer;
   text-decoration: none;
+  word-break: break-all;
+}
+
+@media (max-width: 576px) {
+  .link {
+    font-size: 14px;
+  }
 }

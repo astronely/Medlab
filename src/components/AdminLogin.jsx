@@ -4,10 +4,12 @@ import Button from "./ui/Button.jsx";
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {useApp} from "../hooks/useApp.js";
 
 export default function AdminLogin() {
     const navigate = useNavigate();
-    const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
+    const {serverAddress} = useApp();
+    // const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
 
     const {register, handleSubmit, reset} = useForm({
         defaultValues: {

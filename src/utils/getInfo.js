@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
+const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_SERVER}`
 
 export const getLinks = async (links, setLinks, theme, assetsFolder, city = undefined) => {
     setLinks([]);

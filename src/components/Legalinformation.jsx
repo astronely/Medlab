@@ -4,9 +4,11 @@ import BoxDividerLink from "./BoxDividerLink.jsx";
 import {useEffect, useState} from "react";
 import {getLinks} from "../utils/getInfo.js";
 import "./styles/legal.scss"
+import {useApp} from "../hooks/useApp.js";
 
 export default function LegalInformation() {
-    const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
+    const {serverAddress} = useApp();
+    // const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
     const serverAssetsFolder = `${serverAddress}/mdlbassets/legalInfo`;
 
     const [legalInfoLinks, setLegalInfoLinks] = useState([]);
