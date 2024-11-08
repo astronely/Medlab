@@ -47,7 +47,7 @@ export default function FeedbackModal({open = false}) {
                 },
                 body: new URLSearchParams({
                     name: formData.name,
-                    city: "",
+                    city: formData.city,
                     phone: formData.phone,
                     description: formData.description
                 }).toString()
