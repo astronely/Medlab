@@ -17,6 +17,24 @@ export default function AboutUs() {
     const [authorities, setAuthorities] = useState([]);
     const [clinicAddress, setClinicAddress] = useState("______________________");
 
+    useEffect(() => {
+        setLinks([]);
+        setAuthorities([]);
+        getLinks(links, setLinks, "about", serverAssetsFolder).catch(err => console.log(err));
+        getInfo(setAuthorities, "authority").catch(err => console.log(err))
+        getAddress(setClinicAddress, currentCity.replace("г. ", "")).catch(err => console.log(err));
+    }, [currentCity])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const fetchedData = await getCityInfo(currentCity);
+            // console.log("CITY DATA: ", fetchedData)
+            setCityData(fetchedData[0]);
+            // console.log("CITY DATA: ", cityData)
+        }
+        fetchData().catch(err => console.log(err))
+    }, [currentCity])
+
     const aboutUsInfo = {
         title: "О нас",
         text: "Наша клиника — это современный медицинский центр, работающий в соответствии\n" +
@@ -71,24 +89,6 @@ e-mail: medlab74@mail.ru
             "e-mail: medlab74@mail.ru\n" +
             "телефон: " + cityData.phone
     }
-
-    useEffect(() => {
-        setLinks([]);
-        setAuthorities([]);
-        getLinks(links, setLinks, "about", serverAssetsFolder).catch(err => console.log(err));
-        getInfo(setAuthorities, "authority").catch(err => console.log(err))
-        getAddress(setClinicAddress, currentCity.replace("г. ", "")).catch(err => console.log(err));
-    }, [currentCity])
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const fetchedData = await getCityInfo(currentCity);
-            // console.log("CITY DATA: ", fetchedData)
-            setCityData(fetchedData[0]);
-            // console.log("CITY DATA: ", cityData)
-        }
-        fetchData().catch(err => console.log(err))
-    }, [currentCity])
 
     return (
         <Container>
