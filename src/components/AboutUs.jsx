@@ -11,7 +11,7 @@ import {useApp} from "../hooks/useApp.js";
 export default function AboutUs() {
     const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
     const serverAssetsFolder = `${serverAddress}/mdlbassets/aboutUs`;
-
+    const [cityData, setCityData] = useState({});
     const {currentCity} = useApp();
     const [links, setLinks] = useState([]);
     const [authorities, setAuthorities] = useState([]);
@@ -48,7 +48,7 @@ export default function AboutUs() {
 Адрес клиники в городе: ${clinicAddress}
 
 e-mail: medlab74@mail.ru
-телефон: 89514895362
+телефон: ${cityData.phone}
 
 Лицензирующий орган: Министерство здравоохранения Челябинской области
 Телефон: +7 (351) 240-22-22
@@ -57,12 +57,37 @@ e-mail: medlab74@mail.ru
 Регистрационный номер лицензии: Л041-01141-45/00145516`
     }
 
+    const contactInfoAsha = {
+        text: "Общество с ограниченной ответственностью «БИОЛИНИЯ»\n" +
+            "456014, Челябинская область, город Аша, ул. Ленина, д. 19, пом. 2\n" +
+            "ИНН 7424031904, КПП 742401001     ОГРН 1147424000316\n" +
+            "Р/сч. 40702810372000011086                      в ПАО «Сбербанк»\n" +
+            "К/сч.30101810700000000602\n" +
+            "БИК 047501602\n" +
+            "Лицензия № Л041-01024-74/03147950 от 09.09.2025\n" +
+            "Директор Хайсамова Римма Закировна\n" +
+            "действует на основании Устава\n\n" +
+            "Адрес клиники в городе: " + clinicAddress + "\n\n" +
+            "e-mail: medlab74@mail.ru\n" +
+            "телефон: " + cityData.phone
+    }
+
     useEffect(() => {
         setLinks([]);
         setAuthorities([]);
         getLinks(links, setLinks, "about", serverAssetsFolder).catch(err => console.log(err));
         getInfo(setAuthorities, "authority").catch(err => console.log(err))
         getAddress(setClinicAddress, currentCity.replace("г. ", "")).catch(err => console.log(err));
+    }, [currentCity])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const fetchedData = await getCityInfo(currentCity);
+            // console.log("CITY DATA: ", fetchedData)
+            setCityData(fetchedData[0]);
+            // console.log("CITY DATA: ", cityData)
+        }
+        fetchData().catch(err => console.log(err))
     }, [currentCity])
 
     return (
@@ -81,7 +106,7 @@ e-mail: medlab74@mail.ru
                     <div className="about__main-content-item">
                         <BoxDividerV style={{color: "var(--secondary-black)", whiteSpace: "pre-wrap", fontSize: "1rem"}}
                                      isTitle={false}
-                                     info={contactInfo}
+                                     info={currentCity === "Аша" ? contactInfoAsha : contactInfo}
                                      dividerUpper={false}/>
                     </div>
                 </div>
