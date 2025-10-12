@@ -7,6 +7,7 @@ import "./styles/about.scss"
 import {useEffect, useState} from "react";
 import {getAddress, getInfo, getLinks} from "../utils/getInfo.js";
 import {useApp} from "../hooks/useApp.js";
+import {getCityInfo} from "../utils/getInfo.js";
 
 export default function AboutUs() {
     const serverAddress = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_SERVER_PORT}`
