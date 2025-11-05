@@ -7,9 +7,9 @@ export default function Logo({isLink = false}) {
     return (
         <>
             {isLink ?
-                <Link className="logo" style={{textDecoration: "none"}} to={"/"}>MedLab </Link>
+                <Link className="logo" style={{textDecoration: "none"}} to={"/"}> МедЛаб </Link>
                 :
-                <div className="logo">MedLab</div>}
+                <div className="logo">МедЛаб</div>}
 
         </>
     )
