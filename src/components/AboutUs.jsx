@@ -1,11 +1,10 @@
 import BoxDividerV from "./BoxDividerV.jsx";
 import {Container} from "react-bootstrap";
 import BoxDividerLink from "./BoxDividerLink.jsx";
-import BoxDiamondLink from "./BoxDiamondLink.jsx";
 import "./styles/aboutMedia.scss"
 import "./styles/about.scss"
 import {useEffect, useState} from "react";
-import {getAddress, getInfo, getLinks} from "../utils/getInfo.js";
+import {getAddress, getLinks} from "../utils/getInfo.js";
 import {useApp} from "../hooks/useApp.js";
 import {getCityInfo} from "../utils/getInfo.js";
 
@@ -15,14 +14,11 @@ export default function AboutUs() {
     const [cityData, setCityData] = useState({});
     const {currentCity} = useApp();
     const [links, setLinks] = useState([]);
-    const [authorities, setAuthorities] = useState([]);
     const [clinicAddress, setClinicAddress] = useState("______________________");
 
     useEffect(() => {
         setLinks([]);
-        setAuthorities([]);
         getLinks(links, setLinks, "about", serverAssetsFolder).catch(err => console.log(err));
-        getInfo(setAuthorities, "authority").catch(err => console.log(err))
         getAddress(setClinicAddress, currentCity.replace("г. ", "")).catch(err => console.log(err));
     }, [currentCity])
 
@@ -53,7 +49,25 @@ export default function AboutUs() {
 
     const authoritiesInfo = {
         title: "Адреса и контакты контролирующих органов",
-        authorities: authorities
+        text: `Для офисов в Симе, Аше, Миньяре:
+
+Министерство здравоохранения Челябинской области
+г. Челябинск, ул. Кирова, 165
+8 (351) 240-22-22
+
+Управление Федеральной службы по надзору в сфере защиты прав потребителей и благополучия человека по Челябинской области
+г. Челябинск, ул. Елькина, 73
+8 (351) 261-54-65
+
+Для офиса в Щучьем:
+
+Департамент здравоохранения Курганской области
+г. Курган, ул. Томина, 49
+8 (352) 249-85-01
+
+Управление Федеральной службы по надзору в сфере защиты прав потребителей и благополучия человека по Курганской области
+г. Курган, Куйбышева, 46
+8 (352) 241-33-36`
     }
 
     const contactInfo = {
@@ -101,8 +115,11 @@ e-mail: medlab74@mail.ru
                         <BoxDividerLink links={links}/>
                     </div>
                     <div className="about__links about__main-content-item">
-                        <BoxDividerV isDivider={false} isText={false} info={authoritiesInfo}/>
-                        <BoxDiamondLink isAddresses={true} info={authoritiesInfo.authorities}/>
+                        <BoxDividerV
+                            isDivider={false}
+                            style={{whiteSpace: "pre-wrap"}}
+                            info={authoritiesInfo}
+                        />
                     </div>
                     <div className="about__main-content-item">
                         <BoxDividerV style={{color: "var(--secondary-black)", whiteSpace: "pre-wrap", fontSize: "1rem"}}
