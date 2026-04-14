@@ -17,7 +17,7 @@ export default function SocialLink({picture, text, type}) {
                     : type === "phone" ?
                         <span><a className={styles.link} href={`tel: ${text}`} >{text}</a></span>
                         : type === "whatsapp" ?
-                            <span><a className={styles.link} href={`https://wa.me/${text.replace(/[^\d+]/g, "")}`} target={"_blank"} rel="noopener noreferrer">{text}</a></span>
+                            <span>{text}</span>
                             :
                             <span><a className={styles.link} href={`https://${text}`} target={"_blank"} rel="noopener noreferrer">{text}</a></span>
             }
